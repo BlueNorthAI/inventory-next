@@ -1,11 +1,3 @@
-import { useState, Fragment } from 'react'
-import { AgChartsReact } from 'ag-charts-react'
-
-import {
-  generatedDeficitData,
-  generatedInventoryExcess,
-} from '~/data/agGrid/snop/inventory/demandHeatMap'
-import 'ag-charts-enterprise'
 import {
   Table,
   TableBody,
@@ -13,8 +5,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '~/components/ui/table'
-import { Progress } from '~/components/ui/progress'
+} from '@/components/ui/table'
+import { Progress } from '@/components/ui/progress'
 
 const inventory = [
   {

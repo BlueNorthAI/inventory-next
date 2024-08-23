@@ -1,6 +1,6 @@
-import WrapperMultiColumnChart from '~/kendo/charts/column/WrapperColumnChart'
-import WrapperMultiStackColChart from '~/kendo/charts/stackcol/WrapperStackColChart'
-import WrapperWaterfallChart from '~/kendo/charts/waterfall/WrapperWaterfallChart'
+import WrapperMultiColumnChart from '@/app/kendo/charts/column/WrapperColumnChart'
+import WrapperMultiStackColChart from '@/app/kendo/charts/stackcol/WrapperStackColChart'
+import WrapperWaterfallChart from '@/app/kendo/charts/waterfall/WrapperWaterfallChart';
 
 import {
   expenseCostCategories_m,
@@ -9,7 +9,7 @@ import {
   expenseReportsSeries_m,
   totalExpenseData,
   businessCategories_m,
-  businessSeries_m} from '~/kendo/rawData/analysis/expenseAnalysis'
+  businessSeries_m} from '@/app/kendo/rawData/analysis/expenseAnalysis'
 
 
 export const reviewTabs = [

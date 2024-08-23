@@ -1,8 +1,8 @@
-import WrapperMultiColumnChart from '~/kendo/charts/column/WrapperColumnChart'
-import WrapperPieChart from  '~/kendo/charts/pie/WrapperPieChart'
-import WrapperDonutChart from '~/kendo/charts/donut/WrapperDonutChart'
-import WrapperMultiStackColChart from '~/kendo/charts/stackcol/WrapperStackColChart'
-import WrapperWaterfallChart from '~/kendo/charts/waterfall/WrapperWaterfallChart'
+import WrapperMultiColumnChart from '@/app/kendo/charts/column/WrapperColumnChart'
+import WrapperPieChart from  '@/app/kendo/charts/pie/WrapperPieChart'
+import WrapperDonutChart from '@/app/kendo/charts/donut/WrapperDonutChart'
+import WrapperMultiStackColChart from '@/app/kendo/charts/stackcol/WrapperStackColChart'
+import WrapperWaterfallChart from '@/app/kendo/charts/waterfall/WrapperWaterfallChart'
 
 import {trendCategories_m,
   trendSeries_m,
@@ -11,7 +11,7 @@ import {trendCategories_m,
   avgCategories_m,
   avgSeries_m,
   tierCategories_m,
-  tierSeries_m} from '~/kendo/rawData/analysis/costAnalysis'
+  tierSeries_m} from '@/app/kendo/rawData/analysis/costAnalysis'
 
 
 export const reviewTabs = [

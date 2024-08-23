@@ -1,10 +1,17 @@
-import WrapperMultiColumnChart from '~/kendo/charts/column/WrapperColumnChart'
-import WrapperPieChart from  '~/kendo/charts/pie/WrapperPieChart'
-import WrapperDonutChart from '~/kendo/charts/donut/WrapperDonutChart'
-import WrapperMultiStackColChart from '~/kendo/charts/stackcol/WrapperStackColChart'
-import WrapperWaterfallChart from '~/kendo/charts/waterfall/WrapperWaterfallChart'
+import WrapperMultiColumnChart from '@/app/kendo/charts/column/WrapperColumnChart'
+import WrapperPieChart from  '@/app/kendo/charts/pie/WrapperPieChart'
+import WrapperDonutChart from '@/app/kendo/charts/donut/WrapperDonutChart'
+import WrapperMultiStackColChart from '@/app/kendo/charts/stackcol/WrapperStackColChart'
+import WrapperWaterfallChart from '@/app/kendo/charts/waterfall/WrapperWaterfallChart'
 
-import {leakageTrendCategories_m,leakageTrendSeries_m,amountCategories_m,amountSeries_m,typeCategoryData,supplierCategoryData} from '~/kendo/rawData/analysis/agreementAnalysis'
+import {
+  leakageTrendCategories_m,
+  leakageTrendSeries_m,
+  amountCategories_m,
+  amountSeries_m,
+  typeCategoryData,
+  supplierCategoryData
+} from '@/app/kendo/rawData/analysis/agreementAnalysis';
 
 
 export const reviewTabs = [

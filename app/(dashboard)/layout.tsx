@@ -1,9 +1,12 @@
 
+
 export const experimental_ppr = true;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <div>{children}</div>;
 }
+
+// 'use client';
 // import Link from 'next/link';
 // import {
 //   Home,
@@ -34,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 // import { Analytics } from '@vercel/analytics/react';
 // import { User } from './user';
 // import { VercelLogo } from '@/components/icons';
-// import Providers from './providers';
+// import { Providers } from './providers';
 // import { NavItem } from './nav-item';
 // import { SearchInput } from './search';
 // import { Header } from '@/components/header';
@@ -54,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 //             <MobileNav />
 //             <DashboardBreadcrumb />
 //             <SearchInput />
-//             <User />
+//             {/* <User /> */}
 //           </header>
 //           <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
 //             {children}

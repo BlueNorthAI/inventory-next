@@ -1,4 +1,4 @@
-import { kpiService_m } from '~/data/analysis/categoryData'
+import { kpiService_m } from '@/app/data/analysis/categoryData'
 import { Fragment, useState } from 'react'
 import {
   Disclosure,

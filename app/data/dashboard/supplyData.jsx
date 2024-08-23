@@ -1,7 +1,7 @@
-import WrapperMultiAreaChart from "~/kendo/charts/area/WrapperAreaChart";
-import WrapperMultiColumnChart from "~/kendo/charts/column/WrapperColumnChart";
-import WrapperMultiBarChart from "~/kendo/charts/bar/WrapperBarChart";
-import WrapperPieChart from "~/kendo/charts/pie/WrapperPieChart";
+import WrapperMultiAreaChart from '@/app/kendo/charts/area/WrapperAreaChart';
+import WrapperMultiColumnChart from '@/app/kendo/charts/column/WrapperColumnChart';
+import WrapperMultiBarChart from '@/app/kendo/charts/bar/WrapperBarChart';
+import WrapperPieChart from '@/app/kendo/charts/pie/WrapperPieChart';
 
 import {
   poamount_m,
@@ -17,8 +17,8 @@ import {
   cycleCategories_m,
   cycleSeries_m,
   overdueCategories_m,
-  overdueSeries_m,
-} from "~/kendo/rawData/dashboard/supplyDashboard";
+  overdueSeries_m
+} from '@/app/kendo/rawData/dashboard/supplyDashboard';
 
 export const reviewTabs = [
   { name: "Month", href: "#", current: true },

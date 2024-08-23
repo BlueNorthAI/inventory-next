@@ -1,4 +1,3 @@
-import { Link } from '@remix-run/react'
 import {
   reviewTabs,
   meetingTabs,
@@ -7,8 +6,8 @@ import {
   kpiService_q,
   kpiCost_q,
   kpiService_y,
-  kpiCost_y,
-} from '~/data/analysis/spendData'
+  kpiCost_y
+} from '@/app/data/analysis/spendData';
 import { Fragment, useState } from 'react'
 import {
   Disclosure,

@@ -1,12 +1,12 @@
-import WrapperMultiColumnChart from '~/kendo/charts/column/WrapperColumnChart'
-import WrapperMultiStackColChart from '~/kendo/charts/stackcol/WrapperStackColChart'
-import WrapperWaterfallChart from '~/kendo/charts/waterfall/WrapperWaterfallChart'
-import WrapperMultiStackBarChart from '~/kendo/charts/stackbar/WrapperStackBarChart'
+import WrapperMultiColumnChart from '@/app/kendo/charts/column/WrapperColumnChart'
+import WrapperMultiStackColChart from '@/app/kendo/charts/stackcol/WrapperStackColChart'
+import WrapperWaterfallChart from '@/app/kendo/charts/waterfall/WrapperWaterfallChart'
+import WrapperMultiStackBarChart from '@/app/kendo/charts/stackbar/WrapperStackBarChart'
 import {
   expenseCostCategories_m,
   expenseCostSeries_m,
   expenseReportsCategories_m,
-  expenseReportsSeries_m,} from '~/kendo/rawData/analysis/pogoverAnalysis'
+  expenseReportsSeries_m,} from '@/app/kendo/rawData/analysis/pogoverAnalysis'
 
 
 export const reviewTabs = [

@@ -1,10 +1,9 @@
-import React from 'react'
 import React, { Fragment, useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createRoot } from 'react-dom/client'
-import { AgChartsReact } from 'ag-charts-react'
-import 'ag-charts-enterprise'
-import { cn } from '~/lib/utils'
+// import { AgChartsReact } from 'ag-charts-react'
+// import 'ag-charts-enterprise'
+import { cn } from '@/lib/utils'
 
 function formatNumber(value) {
   value /= 1_000_000

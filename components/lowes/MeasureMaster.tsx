@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react"; // AG Grid Component
-import { Form, useFetcher } from "@remix-run/react";
+// import { Form, useFetcher } from "@remix-run/react";
 // Optional Theme applied to the grid
-import "ag-grid-enterprise"; // Required for AG Grid Enterprise features
+// import "ag-grid-enterprise"; // Required for AG Grid Enterprise features
 
 export default function MeasureMaster() {
   //   const demand = useFetcher();
-  const fetcher = useFetcher();
+  // const fetcher = useFetcher();
   const [rowData, setRowData] = useState([]);
   const [gridApi, setGridApi] = useState(null);
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), [])
@@ -113,29 +113,29 @@ export default function MeasureMaster() {
   // ); // Include `fetcher` in the dependency array
 
   // Load data when the grid is ready
-  const onGridReady = useCallback((params) => {
+  // const onGridReady = useCallback((params) => {
 
-    setGridApi(params.api);
-    loadData();
-  }, []);
+  //   setGridApi(params.api);
+  //   loadData();
+  // }, []);
 
-  // Function to load data
-  const loadData = useCallback(() => {
-    fetcher.load("/rMeasureMaster?page=1&limit=100"); // Adjust endpoint as necessary
-  }, [fetcher]);
+  // // Function to load data
+  // const loadData = useCallback(() => {
+  //   fetcher.load("/rMeasureMaster?page=1&limit=100"); // Adjust endpoint as necessary
+  // }, [fetcher]);
 
-  // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
+  // // Effect to update row data when fetcher data changes
+  // useEffect(() => {
+  //   if (fetcher.data) {
    
-      setRowData(fetcher.data.data);
-    }
-  }, [fetcher.data]);
+  //     setRowData(fetcher.data.data);
+  //   }
+  // }, [fetcher.data]);
 
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className={'ag-theme-quartz'}>
-        <Form method="post">
+        <form method="post">
           <AgGridReact
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
@@ -153,7 +153,7 @@ export default function MeasureMaster() {
             enableRangeSelection={true}
             floatingFilter={true}
           />
-        </Form>
+        </form>
       </div>
     </div>
   )

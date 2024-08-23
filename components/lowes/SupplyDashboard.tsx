@@ -7,8 +7,8 @@ import {
   ChevronDownIcon,
   CheckIcon,
 } from '@heroicons/react/20/solid'
-import { kpiService_m } from '~/data/dashboard/supplyData'
-import CardLayout from '~/components/snop/CardLayout'
+import { kpiService_m } from '@/app/data/dashboard/supplyData'
+import CardLayout from '@/components/snop/CardLayout'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')

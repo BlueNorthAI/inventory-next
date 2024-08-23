@@ -1,6 +1,11 @@
-import WrapperMultiBarChart from "~/kendo/charts/bar/WrapperBarChart"
+import WrapperMultiBarChart from "@/app/kendo/charts/bar/WrapperBarChart"
 // import WrapperMap from '~/kendo/map/WrapperMap'
-import { orderTrendCategories_m, orderTrendSeries_m,discountproductCategories_m,discountproductSeries_m} from '~/kendo/rawData/analysis/actionAnalysis'
+import {
+  orderTrendCategories_m,
+  orderTrendSeries_m,
+  discountproductCategories_m,
+  discountproductSeries_m
+} from '@/app/kendo/rawData/analysis/actionAnalysis';
 
 
 export const reviewTabs = [

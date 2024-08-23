@@ -1,9 +1,9 @@
-import React from 'react'
+
 import React, { Fragment, useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createRoot } from 'react-dom/client'
-import { AgChartsReact } from 'ag-charts-react'
-import 'ag-charts-enterprise'
+// import { AgChartsReact } from 'ag-charts-react'
+// import 'ag-charts-enterprise'
 import {
   Table,
   TableBody,
@@ -11,9 +11,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '~/components/ui/table'
-import { Progress } from '~/components/ui/progress'
-import { labels } from '~/data/columndata/data'
+} from '@/components/ui/table'
+import { Progress } from '@/components/ui/progress'
+import { labels } from '@/data/columndata/data'
 
 function getData() {
   return [

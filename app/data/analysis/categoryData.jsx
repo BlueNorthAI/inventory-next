@@ -1,12 +1,12 @@
-import WrapperMultiBarChart from '~/kendo/charts/bar/WrapperBarChart'
-import WrapperScatterBubbleChart from '~/kendo/charts/bubble/WrapperScatterBubbleChart'
+import WrapperMultiBarChart from '@/app/kendo/charts/bar/WrapperBarChart'
+import WrapperScatterBubbleChart from '@/app/kendo/charts/bubble/WrapperScatterBubbleChart'
 import {itemCategories_m,
   itemSeries_m,
   supplierCategories_m,
   supplierSeries_m,
   unitSeries_m,
   itemSupplierCategories_m,
-  itemSupplierSeries_m} from '~/kendo/rawData/analysis/categoryAnalysis'
+  itemSupplierSeries_m} from '@/app/kendo/rawData/analysis/categoryAnalysis'
 
 
 export const reviewTabs = [

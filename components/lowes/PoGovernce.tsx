@@ -1,4 +1,4 @@
-import { kpiService_m } from '~/data/analysis/poGoverData'
+import { kpiService_m } from '@/app/data/analysis/poGoverData';
 import {  useState } from 'react'
 
 import {
@@ -7,8 +7,8 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from '~/components/ui/table'
+  TableRow
+} from '@/components/ui/table';
 const deficit = [
   {
     poNumber: 'PO98464',
