@@ -1,4 +1,5 @@
-import * as React from 'react'
+// "use client";
+import * as React from 'react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -11,35 +12,36 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
-import { DataTablePagination } from '~/components/datatable/data-table-pagination'
-import { DataTableToolbar } from '~/components/datatable/data-table-toolbar'
+  useReactTable
+} from '@tanstack/react-table';
+import { DataTablePagination } from '@/components/datatable/data-table-pagination';
+import { DataTableToolbar } from '@/components/datatable/data-table-toolbar';
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from '~/components/ui/table'
+  TableRow
+} from '@/components/ui/table';
+import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
-  data,
+  data
 }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  );
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
@@ -47,7 +49,7 @@ export function DataTable<TData, TValue>({
       sorting,
       columnVisibility,
       rowSelection,
-      columnFilters,
+      columnFilters
     },
     enableRowSelection: true,
     enableMultiRowSelection: false,
@@ -60,8 +62,8 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-  })
+    getFacetedUniqueValues: getFacetedUniqueValues()
+  });
 
   return (
     <div className="space-y-4">
@@ -81,7 +83,7 @@ export function DataTable<TData, TValue>({
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -120,5 +122,5 @@ export function DataTable<TData, TValue>({
       </div>
       <DataTablePagination table={table} />
     </div>
-  )
+  );
 }

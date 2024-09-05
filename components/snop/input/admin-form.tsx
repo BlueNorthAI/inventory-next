@@ -13,7 +13,7 @@ export default function AdminInput({ admin }) {
         <Input
           id="lyf"
           name="life"
-          defaultValue={admin["life"]}
+          // defaultValue={admin["life"]}
           className="text-lg text-gray-500 text-center"
         />
       </div>
@@ -26,7 +26,7 @@ export default function AdminInput({ admin }) {
         <Input
           id="disesel"
           name="diesel_price"
-          defaultValue={admin["diesel_price"]}
+          // defaultValue={admin["diesel_price"]}
           className="text-lg text-gray-500 text-center"
         />
       </div>
@@ -39,7 +39,7 @@ export default function AdminInput({ admin }) {
         <Input
           id="load"
           name="loading_unloading"
-          defaultValue={admin["loading_unloading"]}
+          // defaultValue={admin["loading_unloading"]}
           className="text-lg text-gray-500 text-center"
         />
       </div>
@@ -52,7 +52,7 @@ export default function AdminInput({ admin }) {
         <Input
           id="tol"
           name="toll"
-          defaultValue={admin["toll"]}
+          // defaultValue={admin["toll"]}
           className="text-lg text-gray-500 text-center"
         />
       </div>
@@ -65,7 +65,7 @@ export default function AdminInput({ admin }) {
         <Input
           id="route"
           name="route_expenses"
-          defaultValue={admin["route_expenses"]}
+          // defaultValue={admin["route_expenses"]}
           className="text-lg text-gray-500 text-center"
         />
       </div>
@@ -78,7 +78,7 @@ export default function AdminInput({ admin }) {
         <Input
           id="driver"
           name="driver_expenses"
-          defaultValue={admin["driver_expenses"]}
+          // defaultValue={admin["driver_expenses"]}
           className="text-lg text-gray-500 text-center"
         />
       </div>
@@ -91,7 +91,7 @@ export default function AdminInput({ admin }) {
         <Input
           id="tyr"
           name="tyres"
-          defaultValue={admin["tyres"]}
+          // defaultValue={admin["tyres"]}
           className="text-lg text-gray-500 text-center"
         />
       </div>

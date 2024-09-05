@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { AgChartsReact } from 'ag-charts-react'
+"use client";
+import React from 'react'
+import { AgCharts } from 'ag-charts-react'
 import { topology, capitals, cables } from './topology'
 import { getCurrencyData } from './data'
 
@@ -117,7 +118,7 @@ export default function ChartComponent() {
   return (
     <div>
       <div className="w-full h-screen ">
-        <AgChartsReact options={options} />
+        <AgCharts options={options} />
       </div>
     </div>
   )

@@ -1,9 +1,8 @@
-import { Grid, GridColumn } from "@progress/kendo-react-grid";
-import ProcessData from "~/data/riskData/ShippingData.json";
+'use client';
+import { Grid, GridColumn } from '@progress/kendo-react-grid';
+import ProcessData from '~/data/riskData/ShippingData.json';
 
 export default function ProcessGrid() {
- 
-
   return (
     <Grid
       rowHeight={50}
@@ -21,5 +20,5 @@ export default function ProcessGrid() {
       <GridColumn field="Days" title="Days of Week" />
       <GridColumn field="time" title="Start Time" />
     </Grid>
-  )
+  );
 }

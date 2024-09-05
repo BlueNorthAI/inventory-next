@@ -1,11 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
-import {  statuses } from "~/data/ui/data";
-import { Task } from "~/data/ui/schema";
-import { DataTableColumnHeader } from "~/components/datatable/data-table-column-header";
-import { DataTableRowActions } from "~/components/datatable/data-table-row-actions";
-import { DataTableRowSubmit } from "~/components/datatable/data-table-row-submit";
-import { Badge } from "~/components/ui/badge";
-import { Checkbox } from '~/components/ui/checkbox'
+import {  statuses } from "@/app/data/ui/data";
+import { Task } from "@/app/data/ui/schema";
+import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
+import { DataTableRowActions } from "@/components/datatable/data-table-row-actions";
+import { DataTableRowSubmit } from "@/components/datatable/data-table-row-submit";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from '@/components/ui/checkbox'
 // import { format } from "date-fns";
 
 const formatDate = (dateString) => {

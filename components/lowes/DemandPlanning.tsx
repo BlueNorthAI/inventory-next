@@ -1,3 +1,5 @@
+"use client";
+
 import {
   useCallback,
   useEffect,
@@ -97,7 +99,7 @@ const numberParser = (params: ValueParserParams) => {
   return valueAsNumber
 }
 
-export default function LevelMasterBack() {
+export default function LevelMasterBack({data}) {
    const getAllRows = useCallback(() => {
      gridRef.current.api.forEachNode((rowNode) => {
        console.log(`=============== ROW ${rowNode.rowIndex}`)
@@ -112,7 +114,7 @@ export default function LevelMasterBack() {
    }, [window])
   //   const demand = useFetcher();
   const gridRef = useRef()
-  const fetcher = useFetcher()
+  // const fetcher = useFetcher()
   const [rowData, setRowData] = useState([])
   const [gridApi, setGridApi] = useState(null)
 
@@ -437,24 +439,24 @@ export default function LevelMasterBack() {
     },
   ]
 
-  const onGridReady = useCallback((params) => {
-    // console.log(`paramsOn`, params)
-    setGridApi(params.api)
-    loadData()
-  }, [])
+  // const onGridReady = useCallback((params) => {
+  //   // console.log(`paramsOn`, params)
+  //   setGridApi(params.api)
+  //   loadData()
+  // }, [])
 
   // Function to load data
-  const loadData = useCallback(() => {
-    // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
-    fetcher.load('/rDemandPlanning') // Adjust endpoint as necessary
-  }, [fetcher])
+  // const loadData = useCallback(() => {
+  //   // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
+  //   fetcher.load('/rDemandPlanning') // Adjust endpoint as necessary
+  // }, [fetcher])
 
-  // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
-      setRowData(fetcher.data.data)
-    }
-  }, [fetcher.data])
+  // // Effect to update row data when fetcher data changes
+  // useEffect(() => {
+  //   if (fetcher.data) {
+  //     setRowData(fetcher.data.data)
+  //   }
+  // }, [fetcher.data])
 
   return (
     <div className="ag-theme-quartz" style={{ height: '100%', width: '100%' }}>
@@ -464,7 +466,7 @@ export default function LevelMasterBack() {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          onGridReady={onGridReady}
+          // onGridReady={onGridReady}
           domLayout="autoHeight"
           getRowId={getRowId}
           enableRangeSelection={true}

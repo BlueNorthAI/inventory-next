@@ -1,7 +1,6 @@
+"use client";
 import React, { useCallback, useEffect, useState, useMemo, useRef } from 'react'
-import { AgGridReact } from 'ag-grid-react' // AG Grid Component
-import { Form, useFetcher } from '@remix-run/react'
-import { PrinterIcon } from '@heroicons/react/24/outline'
+import { AgGridReact } from 'ag-grid-react' // AG Grid 
 import {
   FilePlusIcon,
   Pencil2Icon,
@@ -13,15 +12,15 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '~/components/ui/tooltip'
-import FormDialog from '~/components/dialog'
-import { Button } from '~/components/ui/button'
+} from '@/components/ui/tooltip'
+import { Dialog } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 
 export default function ConsensusForecast() {
   const gridRef = useRef<AgGridReact>(null) // Provide the correct type for the ref
-  const fetcher = useFetcher()
+  // const fetcher = useFetcher()
   const [rowData, setRowData] = useState([])
-  const [gridApi, setGridApi] = useState<GridApi | null>(null) // Provide the correct type for gridApi
+  const [gridApi, setGridApi] = useState(null) // Provide the correct type for gridApi
    const [open, setOpen] = React.useState(false)
 
 
@@ -35,11 +34,11 @@ export default function ConsensusForecast() {
         // setFormData(initialValue)
       }
 
-      const onChange = (e) => {
-        const { value, id } = e.target
-        // console.log(value,id)
-        // setFormData({ ...formData, [id]: value })
-      }
+      // const onChange = (e) => {
+      //   const { value, id } = e.target
+      //   // console.log(value,id)
+      //   // setFormData({ ...formData, [id]: value })
+      // }
   
   const getRowId = useCallback((params: any) => {
     return params.data.id
@@ -110,23 +109,23 @@ export default function ConsensusForecast() {
     },
   ]
 
-  const onGridReady = useCallback((params) => {
-    setGridApi(params.api)
-    loadData()
-  }, [])
+  // const onGridReady = useCallback((params) => {
+  //   setGridApi(params.api)
+  //   loadData()
+  // }, [])
 
-  // Function to load data
-  const loadData = useCallback(() => {
-    // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
-    fetcher.load('/rCustomerRisk') // Adjust endpoint as necessary
-  }, [fetcher])
+  // // Function to load data
+  // const loadData = useCallback(() => {
+  //   // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
+  //   fetcher.load('/rCustomerRisk') // Adjust endpoint as necessary
+  // }, [fetcher])
 
-  // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
-      setRowData(fetcher.data.data)
-    }
-  }, [fetcher.data])
+  // // Effect to update row data when fetcher data changes
+  // useEffect(() => {
+  //   if (fetcher.data) {
+  //     setRowData(fetcher.data.data)
+  //   }
+  // }, [fetcher.data])
 
   return (
     <>
@@ -163,7 +162,7 @@ export default function ConsensusForecast() {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          onGridReady={onGridReady}
+          // onGridReady={onGridReady}
           domLayout="autoHeight"
           getRowId={getRowId}
           enableRangeSelection={true}
@@ -172,13 +171,13 @@ export default function ConsensusForecast() {
           // sideBar={true}
           groupDefaultExpanded={3}
         />
-        <FormDialog
+        {/* <Dialog
           open={open}
           handleClose={handleClose}
           // data={formData}
           // onChange={onChange}
           // handleFormSubmit={handleFormSubmit}
-        />
+        /> */}
       </div>
     </>
   )

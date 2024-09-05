@@ -1,9 +1,8 @@
-import { Grid, GridColumn } from "@progress/kendo-react-grid";
-import ProcessData from "~/data/riskData/ProductData.json";
+'use client';
+import { Grid, GridColumn } from '@progress/kendo-react-grid';
+import ProcessData from '@/data/riskdata/ProductionData.json';
 
 export default function ProcessGrid() {
- 
-
   return (
     <Grid
       rowHeight={50}
@@ -21,5 +20,5 @@ export default function ProcessGrid() {
       <GridColumn field="distanceUnit" title="Distance Unit" />
       <GridColumn field="transport" title="Transport" />
     </Grid>
-  )
+  );
 }

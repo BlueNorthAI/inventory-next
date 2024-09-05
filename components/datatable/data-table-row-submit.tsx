@@ -1,11 +1,11 @@
 // import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { useFetcher } from "@remix-run/react";
+// import { useFetcher } from "@remix-run/react";
 import { Row } from "@tanstack/react-table";
 
 import { labels } from "../data/ui/data";
 import { taskSchema } from "@/app/data/ui/schema";
 
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -19,7 +19,7 @@ export function DataTableRowSubmit<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = taskSchema.parse(row.original);
-  const fetcher = useFetcher();
+  // const fetcher = useFetcher();
   // console.log("selected row", row);
   // console.log("row id selected", row.getIsSelected().valueOf)
   // console.log("task", task);
@@ -39,22 +39,22 @@ export function DataTableRowSubmit<TData>({
         {/* // <Form method="post"> */}
         <Button
           className="bg-blue-900 hover:bg-blue-800"
-          disabled={
-            row.getIsSelected()
-              ? row.original.Status === "Open"
-                ? false
-                : true
-              : true
-          }
+          // disabled={
+          //   row.getIsSelected()
+          //     ? row.original.Status === "Open"
+          //       ? false
+          //       : true
+          //     : true
+          // }
           // name="intent"
           // value="optimize"
           type="submit"
-          onClick={() =>
-            fetcher.submit(
-              { scenario_id: row.original.scenario_id, intent: "optimize" },
-              { method: "post" },
-            )
-          }
+          // onClick={() =>
+          //   fetcher.submit(
+          //     { scenario_id: row.original.scenario_id, intent: "optimize" },
+          //     { method: "post" },
+          //   )
+          // }
         >
           Submit
           <span className="sr-only">Open menu</span>

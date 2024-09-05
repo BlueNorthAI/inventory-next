@@ -1,17 +1,16 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react'
-import { AgGridReact } from 'ag-grid-react' // AG Grid Component
-import { Form, useFetcher } from '@remix-run/react'
-// Optional Theme applied to the grid
-import 'ag-grid-enterprise' // Required for AG Grid Enterprise features
+'use client';
+
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
+
+import 'ag-grid-enterprise'; // Required for AG Grid Enterprise features
 
 export default function MeasureMaster() {
-  //   const demand = useFetcher();
-  const fetcher = useFetcher()
-  const [rowData, setRowData] = useState([])
-  const [gridApi, setGridApi] = useState(null)
-  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), [])
+  const [rowData, setRowData] = useState([]);
+  const [gridApi, setGridApi] = useState(null);
+  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
 
-  const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), [])
+  const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
   const defaultColDef = {
     sortable: true,
@@ -23,41 +22,40 @@ export default function MeasureMaster() {
     minWidth: 100,
     wrapHeaderText: true,
     autoHeaderHeight: true,
-    initialWidth: 200,
+    initialWidth: 200
     // enableRowGroup: true,
     // headerCheckboxSelection: true,
-  }
+  };
 
   const columnDefs = [
-  
     {
       field: 'level_id',
       headerName: 'Level ID',
       filter: 'agNumberColumnFilter',
       checkboxSelection: true,
       headerCheckboxSelection: true,
-      pinned: true,
+      pinned: true
       // rowGroup: true,
     },
     {
       field: 'level_code',
       headerName: 'Level Code',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
       // rowGroup: true,
     },
     {
       field: 'level_description',
       headerName: 'Level Description',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
       // rowGroup: true,
     },
     {
       field: 'dimension_id',
       headerName: 'Dimension ID',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
       // rowGroup: true,
-    },
-  ]
+    }
+  ];
 
   // const onCellValueChanged = useCallback(
   //   (event) => {
@@ -85,33 +83,33 @@ export default function MeasureMaster() {
   // ); // Include `fetcher` in the dependency array
 
   // Load data when the grid is ready
-  const onGridReady = useCallback((params) => {
-    console.log(params.api)
-    setGridApi(params.api)
-    loadData()
-  }, [])
+  // const onGridReady = useCallback((params) => {
+  //   console.log(params.api)
+  //   setGridApi(params.api)
+  //   loadData()
+  // }, [])
 
-  // Function to load data
-  const loadData = useCallback(() => {
-    fetcher.load('/rLevelMaster?page=1&limit=100') // Adjust endpoint as necessary
-  }, [fetcher])
+  // // Function to load data
+  // const loadData = useCallback(() => {
+  //   fetcher.load('/rLevelMaster?page=1&limit=100') // Adjust endpoint as necessary
+  // }, [fetcher])
 
-  // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
-      setRowData(fetcher.data.data)
-    }
-  }, [fetcher.data])
+  // // Effect to update row data when fetcher data changes
+  // useEffect(() => {
+  //   if (fetcher.data) {
+  //     setRowData(fetcher.data.data)
+  //   }
+  // }, [fetcher.data])
 
   return (
     <div style={containerStyle}>
       <div style={gridStyle} className={'ag-theme-quartz'}>
-        <Form method="post">
+        <form method="post">
           <AgGridReact
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             rowData={rowData}
-            onGridReady={onGridReady}
+            // onGridReady={onGridReady}
             pagination={true}
             paginationPageSize={20}
             suppressPaginationPanel={false}
@@ -124,8 +122,8 @@ export default function MeasureMaster() {
             enableRangeSelection={true}
             floatingFilter={true}
           />
-        </Form>
+        </form>
       </div>
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import { AgChartsReact } from 'ag-charts-react'
+import { AgCharts} from 'ag-charts-react'
 import 'ag-charts-enterprise'
-import WrapperMultiColumnChart from '~/kendo/charts/column/WrapperColumnChart'
+import WrapperMultiColumnChart from '@/app/kendo/charts/column/WrapperColumnChart'
 
 import {
   ssBasicCat,
@@ -11,7 +11,7 @@ import {
   ssBasicSeries_m3,
   ssBasicCat4,
   ssBasicSeries_m4,
-} from '~/components/ss/dcDashboard'
+} from '@/components/ss/dcDashboard'
 
 export const reviewTabs = [
   { name: 'Month', href: '#', current: true },

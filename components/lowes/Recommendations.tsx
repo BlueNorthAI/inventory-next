@@ -2,7 +2,7 @@
 import React, { Fragment, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createRoot } from 'react-dom/client'
-// import { AgChartsReact } from 'ag-charts-react'
+import { AgCharts } from 'ag-charts-react'
 // import 'ag-charts-enterprise'
 import {
   Table,
@@ -732,7 +732,7 @@ export default function Recommendations() {
           </div>
 
           <div className="h-[450px] overflow-y-auto">
-            <AgChartsReact options={Total} />
+            <AgCharts options={Total} />
           </div>
         </div>
       </div>

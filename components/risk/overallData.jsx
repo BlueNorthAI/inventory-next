@@ -1,9 +1,9 @@
-import WrapperMultiAreaChart from "~/kendo/charts/area/WrapperAreaChart";
-import WrapperMultiColumnChart from "~/kendo/charts/column/WrapperColumnChart";
-import WrapperMultiBarChart from "~/kendo/charts/bar/WrapperBarChart";
-import WrapperPieChart from "~/kendo/charts/pie/WrapperPieChart";
-import WrapperMultiColumnColorChart from "~/kendo/charts/columnColor/WrapperColorColumnChart";
-import WrapperMultiLineChart from "~/kendo/charts/line/WrapperLineChart";
+import WrapperMultiAreaChart from "@/app/kendo/charts/area/WrapperAreaChart";
+import WrapperMultiColumnChart from "@/app/kendo/charts/column/WrapperColumnChart";
+import WrapperMultiBarChart from "@/app/kendo/charts/bar/WrapperBarChart";
+import WrapperPieChart from "@/app/kendo/charts/pie/WrapperPieChart";
+import WrapperMultiColumnColorChart from "@/app/kendo/charts/columnColor/WrapperColorColumnChart";
+import WrapperMultiLineChart from "@/app/kendo/charts/line/WrapperLineChart";
 import {
   Table,
   TableBody,
@@ -13,7 +13,26 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '~/components/ui/table'
+} from '@/components/ui/table'
+import {
+  poamount_m,
+  receivedCategories_m,
+  receivedSeries_m,
+  leadCategories_m,
+  leadSeries_m,
+  agreementCategories_m,
+  agreementSeries_m,
+  savings_m,
+  supplierCategories_m,
+  supplierSeries_m,
+  lateCategories_m,
+  lateSeries_m,
+  cycleCategories_m,
+  cycleSeries_m,
+  overdueCategories_m,
+  overdueSeries_m,
+  pro1Data
+} from '@/components/risk/overallDashboard';
 const invoices = [
   {
     name: 'Carrying Cost',
@@ -112,25 +131,7 @@ export function Current() {
     </div>
   )
 }
-import {
-  poamount_m,
-  receivedCategories_m,
-  receivedSeries_m,
-  leadCategories_m,
-leadSeries_m,
-  agreementCategories_m,
-  agreementSeries_m,
-  savings_m,
-  supplierCategories_m,
-  supplierSeries_m,
-  lateCategories_m,
-  lateSeries_m,
-  cycleCategories_m,
-  cycleSeries_m,
-  overdueCategories_m,
-  overdueSeries_m,
-  pro1Data,
-} from '~/components/risk/overallDashboard'
+
 
 export const reviewTabs = [
   { name: "Month", href: "#", current: true },

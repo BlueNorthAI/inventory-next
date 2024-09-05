@@ -1,4 +1,4 @@
-import WrapperMultiLineChart from '~/kendo/charts/line/WrapperLineChart'
+import WrapperMultiLineChart from '@/app/kendo/charts/line/WrapperLineChart'
 import {
 orderCategories_m,
 orderSeries_m,
@@ -18,7 +18,7 @@ ShippingRetailersCategories_m,
 ShipppingRetailersSeries_m,
 RetailersStorageCategories_m,
 RetailersStroageSeries_m,
-} from '~/kendo/rawData/trans/outputRawData'
+} from '@/app/kendo/rawData/trans/outputRawData'
 
 export const reviewTabs = [
   { name: "Month", href: "#", current: true },

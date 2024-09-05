@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createRoot } from 'react-dom/client'
-// import { AgChartsReact } from 'ag-charts-react'
+import { AgCharts } from 'ag-charts-react'
 // import 'ag-charts-enterprise'
 import { cn } from '@/lib/utils'
 
@@ -418,7 +418,7 @@ const MyChart1 = () => {
 
   return (
     <div className="h-[200px]">
-      <AgChartsReact options={chartOptions1} />
+      <AgCharts options={chartOptions1} />
     </div>
   )
 }
@@ -452,7 +452,7 @@ const MyChart2 = () => {
 
   return (
     <div className="h-[200px]">
-      <AgChartsReact options={chartOptions2} />
+      <AgCharts options={chartOptions2} />
     </div>
   )
 }
@@ -486,7 +486,7 @@ const MyChart3 = () => {
 
   return (
     <div className="h-[200px]">
-      <AgChartsReact options={chartOptions3} />
+      <AgCharts options={chartOptions3} />
     </div>
   )
 }
@@ -511,7 +511,7 @@ const MyChart4 = () => {
 
   return (
     <div className="h-[200px]">
-      <AgChartsReact options={chartOptions1} />
+      <AgCharts options={chartOptions1} />
     </div>
   )
 }
@@ -536,7 +536,7 @@ const MyChart5 = () => {
 
   return (
     <div className="h-[200px]">
-      <AgChartsReact options={chartOptions2} />
+      <AgCharts options={chartOptions2} />
     </div>
   )
 }
@@ -561,7 +561,7 @@ const MyChart6 = () => {
 
   return (
     <div className="h-[200px]">
-      <AgChartsReact options={chartOptions3} />
+      <AgCharts options={chartOptions3} />
     </div>
   )
 }
@@ -578,7 +578,7 @@ export default function InventoryOpportunity() {
 
           <CardContent className="">
             <div className="h-[350px]">
-              <AgChartsReact options={options} />
+              <AgCharts options={options} />
             </div>
           </CardContent>
         </Card>
@@ -594,7 +594,7 @@ export default function InventoryOpportunity() {
 
           <CardContent className="">
             <div className="h-[350px]">
-              <AgChartsReact options={bar} />
+              <AgCharts options={bar} />
             </div>
           </CardContent>
         </Card>

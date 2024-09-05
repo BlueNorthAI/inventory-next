@@ -1,12 +1,13 @@
+"use client";
 import React, { useCallback, useEffect, useState, useMemo, useRef } from 'react'
 import { AgGridReact } from 'ag-grid-react' // AG Grid Component
-import { Form, useFetcher } from '@remix-run/react'
+// import { Form, useFetcher } from '@remix-run/react'
 
 export default function DemandGrid() {
   const gridRef = useRef()
-  const fetcher = useFetcher()
+  // const fetcher = useFetcher()
   const [rowData, setRowData] = useState([])
-  const [gridApi, setGridApi] = useState(null)
+  // const [gridApi, setGridApi] = useState(null)
 
   const getRowId = useCallback((params) => {
     return params.data.id
@@ -121,33 +122,33 @@ export default function DemandGrid() {
     },
   ]
 
-  const onGridReady = useCallback((params) => {
-    setGridApi(params.api)
-    loadData()
-  }, [])
+  // const onGridReady = useCallback((params) => {
+  //   setGridApi(params.api)
+  //   loadData()
+  // }, [])
 
-  // Function to load data
-  const loadData = useCallback(() => {
-    // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
-    fetcher.load('/rDemandRisk') // Adjust endpoint as necessary
-  }, [fetcher])
+  // // Function to load data
+  // const loadData = useCallback(() => {
+  //   // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
+  //   fetcher.load('/rDemandRisk') // Adjust endpoint as necessary
+  // }, [fetcher])
 
-  // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
-      setRowData(fetcher.data.data)
-    }
-  }, [fetcher.data])
+  // // Effect to update row data when fetcher data changes
+  // useEffect(() => {
+  //   if (fetcher.data) {
+  //     setRowData(fetcher.data.data)
+  //   }
+  // }, [fetcher.data])
 
   return (
     <div className="ag-theme-quartz" style={{ height: '100%', width: '100%' }}>
-      <Form method="post">
+      <form method="post">
         <AgGridReact
           ref={gridRef}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          onGridReady={onGridReady}
+          // onGridReady={onGridReady}
           domLayout="autoHeight"
           getRowId={getRowId}
           enableRangeSelection={true}
@@ -175,7 +176,7 @@ export default function DemandGrid() {
           // onCellValueChanged={onCellValueChanged}
           // rowGroupPanelShow="always"
         />
-      </Form>
+      </form>
     </div>
   )
 }

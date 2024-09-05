@@ -137,17 +137,8 @@ export default function SpendAnalysisRoute() {
 
   return (
     <>
-      <div
-        className="flex flex-col"
-        style={{
-          minHeight: `calc(100vh - 4rem)`,
-        }}
-      >
-        {/* ///////////// */}
-        {/* Filters */}
-
         <div className="bg-white">
-          {/* Mobile filter dialog */}
+         
           <Transition.Root show={open} as={Fragment}>
             <Dialog
               as="div"
@@ -252,9 +243,6 @@ export default function SpendAnalysisRoute() {
               </div>
             </Dialog>
           </Transition.Root>
-
-          {/* Filters */}
-
           <section aria-labelledby="filter-heading">
             <h2 id="filter-heading" className="sr-only">
               Filters
@@ -557,7 +545,7 @@ export default function SpendAnalysisRoute() {
             )}
           </Disclosure>
         </footer>
-      </div>
+    
     </>
   )
 }

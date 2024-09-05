@@ -1,19 +1,9 @@
 
 import React, { Fragment, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { createRoot } from 'react-dom/client'
-// import { AgChartsReact } from 'ag-charts-react'
+import { AgCharts } from 'ag-charts-react'
 // import 'ag-charts-enterprise'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { Progress } from '@/components/ui/progress'
-import { labels } from '@/data/columndata/data'
+
 
 function getData() {
   return [
@@ -209,7 +199,7 @@ const stackBar = {
 }
 
 export default function NetworkInventory() {
-  const [heat, setOptions] = useState({
+  const heat = useState({
     // theme: 'ag-polychroma',
     data: dataExcess,
     series: [
@@ -247,7 +237,7 @@ export default function NetworkInventory() {
           </div>
 
           <div className="h-[450px]">
-            <AgChartsReact options={pie} />
+            <AgCharts options={pie} />
           </div>
         </div>
         <div className=" text-blue-900 rounded-lg border">
@@ -260,7 +250,7 @@ export default function NetworkInventory() {
           </div>
 
           <div className="h-[450px]">
-            <AgChartsReact options={stackBar} />
+            <AgCharts options={stackBar} />
           </div>
         </div>
         <div className=" text-blue-900 rounded-lg border">
@@ -273,7 +263,7 @@ export default function NetworkInventory() {
           </div>
 
           <div className="h-[450px]">
-            <AgChartsReact options={heat} />
+            <AgCharts options={heat} />
           </div>
         </div>
       </div>

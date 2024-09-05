@@ -1,4 +1,4 @@
-
+'use client';
 
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
@@ -130,7 +130,7 @@ export default function MeasureMaster() {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          onGridReady={onGridReady}
+          // onGridReady={onGridReady}
           pagination={true}
           paginationPageSize={12}
           suppressPaginationPanel={false}

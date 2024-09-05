@@ -1,67 +1,68 @@
-import React, { useState, useEffect } from 'react'
+'use client';
+import React, { useState, useEffect } from 'react';
 import {
   TruckIcon,
   MapIcon,
-  PresentationChartLineIcon,
-} from '@heroicons/react/24/outline'
-import { useParams, Form } from '@remix-run/react'
-import { Check, ChevronsUpDown } from 'lucide-react'
-import { PiAirplaneTiltFill } from 'react-icons/pi'
-import { FaTrainSubway, FaTruck } from 'react-icons/fa6'
-import { RiShipFill } from 'react-icons/ri'
-import AdminInput from '~/components/snop/admin-form'
-import TruckInput from '~/components/snop/truck-form'
-import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
-import { Command, CommandGroup, CommandItem } from '~/components/ui/command'
-import { Checkbox } from '~/components/ui/checkbox'
+  PresentationChartLineIcon
+} from '@heroicons/react/24/outline';
+// import { useParams, Form } from '@remix-run/react'
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { PiAirplaneTiltFill } from 'react-icons/pi';
+import { FaTrainSubway, FaTruck } from 'react-icons/fa6';
+import { RiShipFill } from 'react-icons/ri';
+import AdminInput from '@/components/snop/input/admin-form';
+import TruckInput from '@/components/snop/input/truck-form';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Command, CommandGroup, CommandItem } from '@/components/ui/command';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
-} from '~/components/ui/popover'
-import { kpiService_m } from '~/data/truckData'
-import { cn } from '~/lib/utils'
+  PopoverTrigger
+} from '@/components/ui/popover';
+import { kpiService_m } from '@/app/data/truckData';
+import { cn } from '@/lib/utils';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import LaneMap from '../network/LaneMap'
-import CleanSheet from './CleanSheet'
+  SelectValue
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
+import LaneMap from '../network/LaneMap';
+import CleanSheet from './CleanSheet';
 const stats = [
   { name: 'Cost per Unit (USD/Unit)', stat: '2,279' },
   { name: 'Cost per Trip Margin', stat: '136,744' },
-  { name: 'Cost per km', stat: '41' },
-]
+  { name: 'Cost per km', stat: '41' }
+];
 
 const frameworks = [
   {
     value: 'next.js',
-    label: 'Kolkata',
+    label: 'Kolkata'
   },
   {
     value: 'sveltekit',
-    label: 'Chennai',
+    label: 'Chennai'
   },
   {
     value: 'nuxt.js',
-    label: 'Nuxt.js',
+    label: 'Nuxt.js'
   },
   {
     value: 'remix',
-    label: 'Remix',
+    label: 'Remix'
   },
   {
     value: 'astro',
-    label: 'Astro',
-  },
-]
+    label: 'Astro'
+  }
+];
 const countries = [
   {
     name: 'Afghanistan',
@@ -74,16 +75,16 @@ const countries = [
         cities: [
           { name: 'Air', latitude: 34.333, longitude: 62.2 },
           { name: 'Rail', latitude: 34.517, longitude: 69.183 },
-          { name: 'Ship', latitude: 36.7, longitude: 67.1 },
-        ],
+          { name: 'Ship', latitude: 36.7, longitude: 67.1 }
+        ]
       },
       {
         name: 'Kabul',
         cities: [
           { name: 'Ship', latitude: 34.333, longitude: 62.2 },
           { name: 'Rail', latitude: 34.517, longitude: 69.183 },
-          { name: 'Air', latitude: 36.7, longitude: 67.1 },
-        ],
+          { name: 'Air', latitude: 36.7, longitude: 67.1 }
+        ]
       },
       {
         name: 'Mazar-e Sharif',
@@ -91,10 +92,10 @@ const countries = [
         cities: [
           { name: 'Herat', latitude: 34.333, longitude: 62.2 },
           { name: 'Kabul', latitude: 34.517, longitude: 69.183 },
-          { name: 'Mazar-e Sharif', latitude: 36.7, longitude: 67.1 },
-        ],
-      },
-    ],
+          { name: 'Mazar-e Sharif', latitude: 36.7, longitude: 67.1 }
+        ]
+      }
+    ]
   },
   {
     name: 'india',
@@ -104,8 +105,8 @@ const countries = [
         name: 'Punjab',
         cities: [
           { name: 'Abohar', latitude: 30.1424, longitude: 74.1999 },
-          { name: 'Amritsar', latitude: 31.583, longitude: 74.883 },
-        ],
+          { name: 'Amritsar', latitude: 31.583, longitude: 74.883 }
+        ]
       },
       {
         name: 'Maharashtra',
@@ -113,8 +114,8 @@ const countries = [
           { name: 'Achalpur', latitude: 21.264, longitude: 77.511 },
           { name: 'Ahmednagar', latitude: 19.0946, longitude: 74.745 },
           { name: 'Akola', latitude: 25.267, longitude: 74.883 },
-          { name: 'Amravati', latitude: 20.933, longitude: 77.75 },
-        ],
+          { name: 'Amravati', latitude: 20.933, longitude: 77.75 }
+        ]
       },
       {
         name: 'Gujarat',
@@ -122,12 +123,12 @@ const countries = [
           { name: 'Achhod', latitude: 21.961, longitude: 72.8317 },
           { name: 'Ahmedabad', latitude: 23.033, longitude: 72.617 },
           { name: 'Amreli', latitude: 21.5991, longitude: 71.2157 },
-          { name: 'Anand', latitude: 22.5569, longitude: 72.9492 },
-        ],
+          { name: 'Anand', latitude: 22.5569, longitude: 72.9492 }
+        ]
       },
       {
         name: 'Tripura',
-        cities: [{ name: 'Agartala', latitude: 23.82, longitude: 91.28 }],
+        cities: [{ name: 'Agartala', latitude: 23.82, longitude: 91.28 }]
       },
       {
         name: 'Uttar Pradesh',
@@ -135,25 +136,25 @@ const countries = [
           { name: 'Agra', latitude: 27.183, longitude: 78.017 },
           { name: 'Aligarh', latitude: 27.8922, longitude: 78.072 },
           { name: 'Allahabad', latitude: 25.4512, longitude: 81.8265 },
-          { name: 'Amethi', latitude: 26.7565, longitude: 81.1569 },
-        ],
+          { name: 'Amethi', latitude: 26.7565, longitude: 81.1569 }
+        ]
       },
       {
         name: 'Mizoram',
-        cities: [{ name: 'Aizwal', latitude: 23.7339, longitude: 92.7168 }],
+        cities: [{ name: 'Aizwal', latitude: 23.7339, longitude: 92.7168 }]
       },
       {
         name: 'Rajasthan',
         cities: [
           { name: 'Ajmer', latitude: 26.4565, longitude: 74.6377 },
-          { name: 'Alwar', latitude: 27.5618, longitude: 76.6119 },
-        ],
+          { name: 'Alwar', latitude: 27.5618, longitude: 76.6119 }
+        ]
       },
       {
         name: 'Haryana',
-        cities: [{ name: 'Ambala', latitude: 30.35, longitude: 76.833 }],
-      },
-    ],
+        cities: [{ name: 'Ambala', latitude: 30.35, longitude: 76.833 }]
+      }
+    ]
   },
   {
     name: 'China',
@@ -164,132 +165,132 @@ const countries = [
         citiesdes: [
           { name: 'Air', latitude: 23.283, longitude: 116.583 },
           { name: 'Rail', latitude: 23.283, longitude: 116.583 },
-          { name: 'Ship', latitude: 23.283, longitude: 116.583 },
-        ],
+          { name: 'Ship', latitude: 23.283, longitude: 116.583 }
+        ]
       },
       {
         name: 'Chengde',
         citiesdes: [
           { name: 'Air', latitude: 40.758, longitude: 118.156 },
           { name: 'Rail', latitude: 40.758, longitude: 118.156 },
-          { name: 'Ship', latitude: 40.758, longitude: 118.156 },
-        ],
+          { name: 'Ship', latitude: 40.758, longitude: 118.156 }
+        ]
       },
       {
         name: 'Chengdu',
         citiesdes: [
           { name: 'Air', latitude: 30.667, longitude: 104.067 },
           { name: 'Rail', latitude: 30.667, longitude: 104.067 },
-          { name: 'Ship', latitude: 30.667, longitude: 104.067 },
-        ],
+          { name: 'Ship', latitude: 30.667, longitude: 104.067 }
+        ]
       },
       {
         name: 'Chenzhou',
         citiesdes: [
           { name: 'Air', latitude: 25.8, longitude: 113.033 },
           { name: 'Rail', latitude: 25.8, longitude: 113.033 },
-          { name: 'Ship', latitude: 25.8, longitude: 113.033 },
-        ],
+          { name: 'Ship', latitude: 25.8, longitude: 113.033 }
+        ]
       },
       {
         name: 'Chifeng',
         citiesdes: [
           { name: 'Air', latitude: 42.268, longitude: 118.964 },
           { name: 'Rail', latitude: 42.268, longitude: 118.964 },
-          { name: 'Ship', latitude: 42.268, longitude: 118.964 },
-        ],
+          { name: 'Ship', latitude: 42.268, longitude: 118.964 }
+        ]
       },
       {
         name: 'Chongqing',
         citiesdes: [
           { name: 'Air', latitude: 29.55, longitude: 106.532 },
           { name: 'Rail', latitude: 29.55, longitude: 106.532 },
-          { name: 'Ship', latitude: 29.55, longitude: 106.532 },
-        ],
+          { name: 'Ship', latitude: 29.55, longitude: 106.532 }
+        ]
       },
       {
         name: 'Chuxiong',
         citiesdes: [
           { name: 'Air', latitude: 25.033, longitude: 101.55 },
           { name: 'Rail', latitude: 25.033, longitude: 101.55 },
-          { name: 'Ship', latitude: 25.033, longitude: 101.55 },
-        ],
+          { name: 'Ship', latitude: 25.033, longitude: 101.55 }
+        ]
       },
       {
         name: 'Dali',
         citiesdes: [
           { name: 'Air', latitude: 29.428, longitude: 121.313 },
           { name: 'Rail', latitude: 29.428, longitude: 121.313 },
-          { name: 'Ship', latitude: 29.428, longitude: 121.313 },
-        ],
+          { name: 'Ship', latitude: 29.428, longitude: 121.313 }
+        ]
       },
       {
         name: 'Dalian',
         citiesdes: [
           { name: 'Air', latitude: 38.917, longitude: 121.65 },
           { name: 'Rail', latitude: 38.917, longitude: 121.65 },
-          { name: 'Ship', latitude: 38.917, longitude: 121.65 },
-        ],
+          { name: 'Ship', latitude: 38.917, longitude: 121.65 }
+        ]
       },
       {
         name: 'Dandong',
         citiesdes: [
           { name: 'Air', latitude: 26.979, longitude: 108.909 },
           { name: 'Rail', latitude: 26.979, longitude: 108.909 },
-          { name: 'Ship', latitude: 26.979, longitude: 108.909 },
-        ],
+          { name: 'Ship', latitude: 26.979, longitude: 108.909 }
+        ]
       },
       {
         name: 'Danxian',
         citiesdes: [
           { name: 'Air', latitude: 19.517, longitude: 109.55 },
           { name: 'Rail', latitude: 19.517, longitude: 109.55 },
-          { name: 'Ship', latitude: 19.517, longitude: 109.55 },
-        ],
+          { name: 'Ship', latitude: 19.517, longitude: 109.55 }
+        ]
       },
       {
         name: 'Daqing',
         citiesdes: [
           { name: 'Air', latitude: 46.583, longitude: 125 },
           { name: 'Rail', latitude: 46.583, longitude: 125 },
-          { name: 'Ship', latitude: 46.583, longitude: 125 },
-        ],
+          { name: 'Ship', latitude: 46.583, longitude: 125 }
+        ]
       },
       {
         name: 'Darlag',
         citiesdes: [
           { name: 'Air', latitude: 33.8, longitude: 99.867 },
           { name: 'Rail', latitude: 33.8, longitude: 99.867 },
-          { name: 'Ship', latitude: 33.8, longitude: 99.867 },
-        ],
+          { name: 'Ship', latitude: 33.8, longitude: 99.867 }
+        ]
       },
       {
         name: 'Dawu',
         citiesdes: [
           { name: 'Air', latitude: 31, longitude: 101.15 },
           { name: 'Rail', latitude: 31, longitude: 101.15 },
-          { name: 'Ship', latitude: 31, longitude: 101.15 },
-        ],
+          { name: 'Ship', latitude: 31, longitude: 101.15 }
+        ]
       },
       {
         name: 'Delingha',
         citiesdes: [
           { name: 'Air', latitude: 37.383, longitude: 97.383 },
           { name: 'Rail', latitude: 37.383, longitude: 97.383 },
-          { name: 'Ship', latitude: 37.383, longitude: 97.383 },
-        ],
+          { name: 'Ship', latitude: 37.383, longitude: 97.383 }
+        ]
       },
       {
         name: 'Dengqen',
         citiesdes: [
           { name: 'Air', latitude: 31.533, longitude: 95.433 },
           { name: 'Rail', latitude: 31.533, longitude: 95.433 },
-          { name: 'Ship', latitude: 31.533, longitude: 95.433 },
-        ],
-      },
-    ],
-  },
-]
+          { name: 'Ship', latitude: 31.533, longitude: 95.433 }
+        ]
+      }
+    ]
+  }
+];
 
 const destination = [
   {
@@ -303,16 +304,16 @@ const destination = [
         citiesdes: [
           { name: 'Air', latitude: 34.333, longitude: 62.2 },
           { name: 'Rail', latitude: 34.517, longitude: 69.183 },
-          { name: 'Ship', latitude: 36.7, longitude: 67.1 },
-        ],
+          { name: 'Ship', latitude: 36.7, longitude: 67.1 }
+        ]
       },
       {
         name: 'Kabul',
         citiesdes: [
           { name: 'Ship', latitude: 34.333, longitude: 62.2 },
           { name: 'Rail', latitude: 34.517, longitude: 69.183 },
-          { name: 'Air', latitude: 36.7, longitude: 67.1 },
-        ],
+          { name: 'Air', latitude: 36.7, longitude: 67.1 }
+        ]
       },
       {
         name: 'Mazar-e Sharif',
@@ -320,10 +321,10 @@ const destination = [
         citiesdes: [
           { name: 'Herat', latitude: 34.333, longitude: 62.2 },
           { name: 'Kabul', latitude: 34.517, longitude: 69.183 },
-          { name: 'Mazar-e Sharif', latitude: 36.7, longitude: 67.1 },
-        ],
-      },
-    ],
+          { name: 'Mazar-e Sharif', latitude: 36.7, longitude: 67.1 }
+        ]
+      }
+    ]
   },
   {
     name: 'India',
@@ -334,82 +335,82 @@ const destination = [
         citiesdes: [
           { name: 'Air', latitude: 26.1805, longitude: 91.7577 },
           { name: 'Rail', latitude: 26.1805, longitude: 91.7577 },
-          { name: 'Ship', latitude: 26.1805, longitude: 91.7577 },
-        ],
+          { name: 'Ship', latitude: 26.1805, longitude: 91.7577 }
+        ]
       },
       {
         name: 'Gwalior',
         citiesdes: [
           { name: 'Air', latitude: 26.2163, longitude: 78.1772 },
           { name: 'Rail', latitude: 26.2163, longitude: 78.1772 },
-          { name: 'Ship', latitude: 26.2163, longitude: 78.1772 },
-        ],
+          { name: 'Ship', latitude: 26.2163, longitude: 78.1772 }
+        ]
       },
       {
         name: 'Haldia',
         citiesdes: [
           { name: 'Air', latitude: 22.0331, longitude: 88.0603 },
           { name: 'Rail', latitude: 22.0331, longitude: 88.0603 },
-          { name: 'Ship', latitude: 22.0331, longitude: 88.0603 },
-        ],
+          { name: 'Ship', latitude: 22.0331, longitude: 88.0603 }
+        ]
       },
       {
         name: 'Haldwani',
         citiesdes: [
           { name: 'Air', latitude: 29.223, longitude: 79.511 },
           { name: 'Rail', latitude: 29.223, longitude: 79.511 },
-          { name: 'Ship', latitude: 29.223, longitude: 79.511 },
-        ],
+          { name: 'Ship', latitude: 29.223, longitude: 79.511 }
+        ]
       },
       {
         name: 'Halisahar',
         citiesdes: [
           { name: 'Air', latitude: 22.9489, longitude: 88.4171 },
           { name: 'Rail', latitude: 22.9489, longitude: 88.4171 },
-          { name: 'Ship', latitude: 22.9489, longitude: 88.4171 },
-        ],
+          { name: 'Ship', latitude: 22.9489, longitude: 88.4171 }
+        ]
       },
       {
         name: 'Hamirpur',
         citiesdes: [
           { name: 'Air', latitude: 31.6845, longitude: 76.5229 },
           { name: 'Rail', latitude: 31.6845, longitude: 76.5229 },
-          { name: 'Ship', latitude: 31.6845, longitude: 76.5229 },
-        ],
+          { name: 'Ship', latitude: 31.6845, longitude: 76.5229 }
+        ]
       },
       {
         name: 'Hansi',
         citiesdes: [
           { name: 'Air', latitude: 29.098, longitude: 75.9646 },
           { name: 'Rail', latitude: 29.098, longitude: 75.9646 },
-          { name: 'Ship', latitude: 29.098, longitude: 75.9646 },
-        ],
+          { name: 'Ship', latitude: 29.098, longitude: 75.9646 }
+        ]
       },
       {
         name: 'Hanumangarh',
         citiesdes: [
           { name: 'Air', latitude: 29.623, longitude: 74.2919 },
           { name: 'Rail', latitude: 29.623, longitude: 74.2919 },
-          { name: 'Ship', latitude: 29.623, longitude: 74.2919 },
-        ],
+          { name: 'Ship', latitude: 29.623, longitude: 74.2919 }
+        ]
       },
       {
         name: 'Harda',
         citiesdes: [
           { name: 'Air', latitude: 22.3409, longitude: 77.0922 },
           { name: 'Rail', latitude: 22.3409, longitude: 77.0922 },
-          { name: 'Ship', latitude: 22.3409, longitude: 77.0922 },
-        ],
+          { name: 'Ship', latitude: 22.3409, longitude: 77.0922 }
+        ]
       },
       {
         name: 'Hardoi',
         citiesdes: [
           { name: 'Air', latitude: 27.3954, longitude: 80.1267 },
           { name: 'Rail', latitude: 27.3954, longitude: 80.1267 },
-          { name: 'Ship', latitude: 27.3954, longitude: 80.1267 },
-        ],
-      },
-    ],
+          { name: 'Ship', latitude: 27.3954, longitude: 80.1267 }
+        ]
+      }
+    ]
   },
   {
     name: 'China',
@@ -420,130 +421,130 @@ const destination = [
         citiesdes: [
           { name: 'Air', latitude: 23.283, longitude: 116.583 },
           { name: 'Rail', latitude: 23.283, longitude: 116.583 },
-          { name: 'Ship', latitude: 23.283, longitude: 116.583 },
-        ],
+          { name: 'Ship', latitude: 23.283, longitude: 116.583 }
+        ]
       },
       {
         name: 'Chengde',
         citiesdes: [
           { name: 'Air', latitude: 40.758, longitude: 118.156 },
           { name: 'Rail', latitude: 40.758, longitude: 118.156 },
-          { name: 'Ship', latitude: 40.758, longitude: 118.156 },
-        ],
+          { name: 'Ship', latitude: 40.758, longitude: 118.156 }
+        ]
       },
       {
         name: 'Chengdu',
         citiesdes: [
           { name: 'Air', latitude: 30.667, longitude: 104.067 },
           { name: 'Rail', latitude: 30.667, longitude: 104.067 },
-          { name: 'Ship', latitude: 30.667, longitude: 104.067 },
-        ],
+          { name: 'Ship', latitude: 30.667, longitude: 104.067 }
+        ]
       },
       {
         name: 'Chenzhou',
         citiesdes: [
           { name: 'Air', latitude: 25.8, longitude: 113.033 },
           { name: 'Rail', latitude: 25.8, longitude: 113.033 },
-          { name: 'Ship', latitude: 25.8, longitude: 113.033 },
-        ],
+          { name: 'Ship', latitude: 25.8, longitude: 113.033 }
+        ]
       },
       {
         name: 'Chifeng',
         citiesdes: [
           { name: 'Air', latitude: 42.268, longitude: 118.964 },
           { name: 'Rail', latitude: 42.268, longitude: 118.964 },
-          { name: 'Ship', latitude: 42.268, longitude: 118.964 },
-        ],
+          { name: 'Ship', latitude: 42.268, longitude: 118.964 }
+        ]
       },
       {
         name: 'Chongqing',
         citiesdes: [
           { name: 'Air', latitude: 29.55, longitude: 106.532 },
           { name: 'Rail', latitude: 29.55, longitude: 106.532 },
-          { name: 'Ship', latitude: 29.55, longitude: 106.532 },
-        ],
+          { name: 'Ship', latitude: 29.55, longitude: 106.532 }
+        ]
       },
       {
         name: 'Chuxiong',
         citiesdes: [
           { name: 'Air', latitude: 25.033, longitude: 101.55 },
           { name: 'Rail', latitude: 25.033, longitude: 101.55 },
-          { name: 'Ship', latitude: 25.033, longitude: 101.55 },
-        ],
+          { name: 'Ship', latitude: 25.033, longitude: 101.55 }
+        ]
       },
       {
         name: 'Dali',
         citiesdes: [
           { name: 'Air', latitude: 29.428, longitude: 121.313 },
           { name: 'Rail', latitude: 29.428, longitude: 121.313 },
-          { name: 'Ship', latitude: 29.428, longitude: 121.313 },
-        ],
+          { name: 'Ship', latitude: 29.428, longitude: 121.313 }
+        ]
       },
       {
         name: 'Dalian',
         citiesdes: [
           { name: 'Air', latitude: 38.917, longitude: 121.65 },
           { name: 'Rail', latitude: 38.917, longitude: 121.65 },
-          { name: 'Ship', latitude: 38.917, longitude: 121.65 },
-        ],
+          { name: 'Ship', latitude: 38.917, longitude: 121.65 }
+        ]
       },
       {
         name: 'Dandong',
         citiesdes: [
           { name: 'Air', latitude: 26.979, longitude: 108.909 },
           { name: 'Rail', latitude: 26.979, longitude: 108.909 },
-          { name: 'Ship', latitude: 26.979, longitude: 108.909 },
-        ],
+          { name: 'Ship', latitude: 26.979, longitude: 108.909 }
+        ]
       },
       {
         name: 'Danxian',
         citiesdes: [
           { name: 'Air', latitude: 19.517, longitude: 109.55 },
           { name: 'Rail', latitude: 19.517, longitude: 109.55 },
-          { name: 'Ship', latitude: 19.517, longitude: 109.55 },
-        ],
+          { name: 'Ship', latitude: 19.517, longitude: 109.55 }
+        ]
       },
       {
         name: 'Daqing',
         citiesdes: [
           { name: 'Air', latitude: 46.583, longitude: 125 },
           { name: 'Rail', latitude: 46.583, longitude: 125 },
-          { name: 'Ship', latitude: 46.583, longitude: 125 },
-        ],
+          { name: 'Ship', latitude: 46.583, longitude: 125 }
+        ]
       },
       {
         name: 'Darlag',
         citiesdes: [
           { name: 'Air', latitude: 33.8, longitude: 99.867 },
           { name: 'Rail', latitude: 33.8, longitude: 99.867 },
-          { name: 'Ship', latitude: 33.8, longitude: 99.867 },
-        ],
+          { name: 'Ship', latitude: 33.8, longitude: 99.867 }
+        ]
       },
       {
         name: 'Dawu',
         citiesdes: [
           { name: 'Air', latitude: 31, longitude: 101.15 },
           { name: 'Rail', latitude: 31, longitude: 101.15 },
-          { name: 'Ship', latitude: 31, longitude: 101.15 },
-        ],
+          { name: 'Ship', latitude: 31, longitude: 101.15 }
+        ]
       },
       {
         name: 'Delingha',
         citiesdes: [
           { name: 'Air', latitude: 37.383, longitude: 97.383 },
           { name: 'Rail', latitude: 37.383, longitude: 97.383 },
-          { name: 'Ship', latitude: 37.383, longitude: 97.383 },
-        ],
+          { name: 'Ship', latitude: 37.383, longitude: 97.383 }
+        ]
       },
       {
         name: 'Dengqen',
         citiesdes: [
           { name: 'Air', latitude: 31.533, longitude: 95.433 },
           { name: 'Rail', latitude: 31.533, longitude: 95.433 },
-          { name: 'Ship', latitude: 31.533, longitude: 95.433 },
-        ],
-      },
-    ],
+          { name: 'Ship', latitude: 31.533, longitude: 95.433 }
+        ]
+      }
+    ]
   },
   {
     name: 'Japan',
@@ -554,69 +555,69 @@ const destination = [
         citiesdes: [
           { name: 'Air', latitude: 35.733, longitude: 140.833 },
           { name: 'Rail', latitude: 35.733, longitude: 140.833 },
-          { name: 'Ship', latitude: 35.733, longitude: 140.833 },
-        ],
+          { name: 'Ship', latitude: 35.733, longitude: 140.833 }
+        ]
       },
       {
         name: 'Ebetsu',
         citiesdes: [
           { name: 'Air', latitude: 43.117, longitude: 141.567 },
           { name: 'Rail', latitude: 43.117, longitude: 141.567 },
-          { name: 'Ship', latitude: 43.117, longitude: 141.567 },
-        ],
+          { name: 'Ship', latitude: 43.117, longitude: 141.567 }
+        ]
       },
       {
         name: 'Fuji',
         citiesdes: [
           { name: 'Air', latitude: 43.817, longitude: 144.783 },
           { name: 'Rail', latitude: 43.817, longitude: 144.783 },
-          { name: 'Ship', latitude: 43.817, longitude: 144.783 },
-        ],
+          { name: 'Ship', latitude: 43.817, longitude: 144.783 }
+        ]
       },
       {
         name: 'Fujinomiya',
         citiesdes: [
           { name: 'Air', latitude: 35.217, longitude: 138.617 },
           { name: 'Rail', latitude: 35.217, longitude: 138.617 },
-          { name: 'Ship', latitude: 35.217, longitude: 138.617 },
-        ],
+          { name: 'Ship', latitude: 35.217, longitude: 138.617 }
+        ]
       },
       {
         name: 'Fujisawa',
         citiesdes: [
           { name: 'Air', latitude: 35.35, longitude: 139.483 },
           { name: 'Rail', latitude: 35.35, longitude: 139.483 },
-          { name: 'Ship', latitude: 35.35, longitude: 139.483 },
-        ],
-      },
-    ],
-  },
-]
+          { name: 'Ship', latitude: 35.35, longitude: 139.483 }
+        ]
+      }
+    ]
+  }
+];
 const origin = [
   {
     id: 1,
     name: 'United States',
-    svg: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg'
   },
   {
     id: 2,
     name: 'Canada',
-    svg: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg'
   },
   {
     id: 3,
     name: 'United Kingdom',
-    svg: 'https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg'
   },
   {
     id: 4,
     name: 'Australia',
-    svg: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg'
   },
   {
     id: 5,
     name: 'Germany',
-    svg: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg'
   },
   // {
   //   id: 6,
@@ -661,8 +662,8 @@ const origin = [
   {
     id: 14,
     name: 'China',
-    svg: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-  },
+    svg: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'
+  }
   // {
   //   id: 15,
   //   name: 'Mexico',
@@ -693,33 +694,33 @@ const origin = [
   //   name: 'Norway',
   //   svg: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg',
   // },
-]
+];
 
 const des = [
   {
     id: 1,
     name: 'United States',
-    svg: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg'
   },
   {
     id: 2,
     name: 'Canada',
-    svg: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg'
   },
   {
     id: 3,
     name: 'United Kingdom',
-    svg: 'https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg'
   },
   {
     id: 4,
     name: 'Australia',
-    svg: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg'
   },
   {
     id: 5,
     name: 'Germany',
-    svg: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg'
   },
   // {
   //   id: 6,
@@ -759,13 +760,13 @@ const des = [
   {
     id: 13,
     name: 'India',
-    svg: 'https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg',
+    svg: 'https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg'
   },
   {
     id: 14,
     name: 'China',
-    svg: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-  },
+    svg: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'
+  }
   // {
   //   id: 15,
   //   name: 'Mexico',
@@ -796,7 +797,7 @@ const des = [
   //   name: 'Norway',
   //   svg: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg',
   // },
-]
+];
 function DemoContainer({
   // eslint-disable-next-line react/prop-types
   className,
@@ -810,158 +811,158 @@ function DemoContainer({
       )}
       {...props}
     />
-  )
+  );
 }
 
 export default function TruckForm({ truckData }) {
-  const params = useParams()
-  const [tyopen, settyOpen] = React.useState(false)
-  const [value, setValue] = React.useState('')
-  const [selectedAccount, setSelectedAccount] = useState(origin[0].name)
-  const [selectedAccountdes, setSelectedAccountdes] = useState(des[0].name)
+  // const params = useParams()
+  const [tyopen, settyOpen] = React.useState(false);
+  const [value, setValue] = React.useState('');
+  const [selectedAccount, setSelectedAccount] = useState(origin[0].name);
+  const [selectedAccountdes, setSelectedAccountdes] = useState(des[0].name);
 
-  const [selectedCountry, setSelectedCountry] = useState(countries[0].name)
-  const [selectedState, setSelectedState] = useState('')
-  const [selectedCity, setSelectedCity] = useState('')
-  const [states, setStates] = useState([])
-  const [cities, setCities] = useState([])
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [selectedCountry, setSelectedCountry] = useState(countries[0].name);
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   useEffect(() => {
     // Set initial default values
-    const defaultCountryName = 'India'
+    const defaultCountryName = 'India';
     const defaultCountry = countries.find(
       (country) => country.name === defaultCountryName
-    )
+    );
 
     if (defaultCountry) {
-      setSelectedCountry(defaultCountry.name)
-      setStates(defaultCountry.states)
+      setSelectedCountry(defaultCountry.name);
+      setStates(defaultCountry.states);
       if (defaultCountry.states.length > 0) {
-        setSelectedState(defaultCountry.states[0].name)
-        setCities(defaultCountry.states[0].cities)
+        setSelectedState(defaultCountry.states[0].name);
+        setCities(defaultCountry.states[0].cities);
         if (defaultCountry.states[0].cities.length > 0) {
-          setSelectedCity(defaultCountry.states[0].cities[0].name)
+          setSelectedCity(defaultCountry.states[0].cities[0].name);
         }
       }
     }
-  }, [])
+  }, []);
 
   const handleCountryChange = (value) => {
-    setSelectedCountry(value)
-    const country = countries.find((country) => country.name === value)
+    setSelectedCountry(value);
+    const country = countries.find((country) => country.name === value);
     if (country) {
-      setStates(country.states)
+      setStates(country.states);
       if (country.states.length > 0) {
-        setSelectedState(country.states[0].name)
-        setCities(country.states[0].cities)
+        setSelectedState(country.states[0].name);
+        setCities(country.states[0].cities);
         if (country.states[0].cities.length > 0) {
-          setSelectedCity(country.states[0].cities[0].name)
+          setSelectedCity(country.states[0].cities[0].name);
         }
       } else {
-        setSelectedState('')
-        setCities([])
-        setSelectedCity('')
+        setSelectedState('');
+        setCities([]);
+        setSelectedCity('');
       }
     } else {
-      setStates([])
-      setSelectedState('')
-      setCities([])
-      setSelectedCity('')
+      setStates([]);
+      setSelectedState('');
+      setCities([]);
+      setSelectedCity('');
     }
-  }
+  };
 
   const handleStateChange = (value) => {
-    setSelectedState(value)
-    const state = states.find((state) => state.name === value)
+    setSelectedState(value);
+    const state = states.find((state) => state.name === value);
     if (state) {
-      setCities(state.cities)
+      setCities(state.cities);
       if (state.cities.length > 0) {
-        setSelectedCity(state.cities[0].name)
+        setSelectedCity(state.cities[0].name);
       } else {
-        setSelectedCity('')
+        setSelectedCity('');
       }
     } else {
-      setCities([])
-      setSelectedCity('')
+      setCities([]);
+      setSelectedCity('');
     }
-  }
+  };
 
   const handleCityChange = (value) => {
-    setSelectedCity(value)
-  }
+    setSelectedCity(value);
+  };
 
-  const [selectedCountrydes, setselectedCountrydes] = useState('')
-  const [selectedStatedes, setselectedStatedes] = useState('')
-  const [selectedCitydes, setselectedCitydes] = useState('')
-  const [statesdes, setstatesdes] = useState([])
-  const [citiesdes, setcitiesdes] = useState([])
-  const [isCollapseddes, setisCollapseddes] = useState(false)
+  const [selectedCountrydes, setselectedCountrydes] = useState('');
+  const [selectedStatedes, setselectedStatedes] = useState('');
+  const [selectedCitydes, setselectedCitydes] = useState('');
+  const [statesdes, setstatesdes] = useState([]);
+  const [citiesdes, setcitiesdes] = useState([]);
+  const [isCollapseddes, setisCollapseddes] = useState(false);
   useEffect(() => {
     // Set initial default values
-    const defaultCountryName = 'India'
+    const defaultCountryName = 'India';
     const defaultCountry = destination.find(
       (country) => country.name === defaultCountryName
-    )
+    );
 
     if (defaultCountry) {
-      setselectedCountrydes(defaultCountry.name)
-      setstatesdes(defaultCountry.statesdes)
+      setselectedCountrydes(defaultCountry.name);
+      setstatesdes(defaultCountry.statesdes);
       if (defaultCountry.statesdes.length > 0) {
-        setselectedStatedes(defaultCountry.statesdes[0].name)
-        setcitiesdes(defaultCountry.statesdes[0].citiesdes)
+        setselectedStatedes(defaultCountry.statesdes[0].name);
+        setcitiesdes(defaultCountry.statesdes[0].citiesdes);
         if (defaultCountry.statesdes[0].citiesdes.length > 0) {
-          setselectedCitydes(defaultCountry.statesdes[0].citiesdes[0].name)
+          setselectedCitydes(defaultCountry.statesdes[0].citiesdes[0].name);
         }
       }
     }
-  }, [])
+  }, []);
 
   const handleCountryChangedes = (value) => {
-    setselectedCountrydes(value)
-    const country = destination.find((country) => country.name === value)
+    setselectedCountrydes(value);
+    const country = destination.find((country) => country.name === value);
     if (country) {
-      setstatesdes(country.statesdes)
+      setstatesdes(country.statesdes);
       if (country.statesdes.length > 0) {
-        setselectedStatedes(country.statesdes[0].name)
-        setcitiesdes(country.statesdes[0].citiesdes)
+        setselectedStatedes(country.statesdes[0].name);
+        setcitiesdes(country.statesdes[0].citiesdes);
         if (country.statesdes[0].citiesdes.length > 0) {
-          setselectedCitydes(country.statesdes[0].citiesdes[0].name)
+          setselectedCitydes(country.statesdes[0].citiesdes[0].name);
         }
       } else {
-        setselectedStatedes('')
-        setcitiesdes([])
-        setselectedCitydes('')
+        setselectedStatedes('');
+        setcitiesdes([]);
+        setselectedCitydes('');
       }
     } else {
-      setstatesdes([])
-      setselectedStatedes('')
-      setcitiesdes([])
-      setselectedCitydes('')
+      setstatesdes([]);
+      setselectedStatedes('');
+      setcitiesdes([]);
+      setselectedCitydes('');
     }
-  }
+  };
 
   const handleStateChangedes = (value) => {
-    setselectedStatedes(value)
-    const state = statesdes.find((state) => state.name === value)
+    setselectedStatedes(value);
+    const state = statesdes.find((state) => state.name === value);
     if (state) {
-      setcitiesdes(state.citiesdes)
+      setcitiesdes(state.citiesdes);
       if (state.citiesdes.length > 0) {
-        setselectedCitydes(state.citiesdes[0].name)
+        setselectedCitydes(state.citiesdes[0].name);
       } else {
-        setselectedCitydes('')
+        setselectedCitydes('');
       }
     } else {
-      setcitiesdes([])
-      setselectedCitydes('')
+      setcitiesdes([]);
+      setselectedCitydes('');
     }
-  }
+  };
 
   const handleCityChangedes = (value) => {
-    setselectedCitydes(value)
-  }
+    setselectedCitydes(value);
+  };
   return (
     <div className="m-2">
-      <Form method="post">
+      <form method="post">
         <Tabs defaultValue="Overall" className=" m-4 space-y-4">
           <TabsList className="">
             <TabsTrigger value="Overall">Overall</TabsTrigger>
@@ -2185,8 +2186,8 @@ export default function TruckForm({ truckData }) {
                                             currentValue === value
                                               ? ''
                                               : currentValue
-                                          )
-                                          settyOpen(false)
+                                          );
+                                          settyOpen(false);
                                         }}
                                       >
                                         <Check
@@ -2232,7 +2233,8 @@ export default function TruckForm({ truckData }) {
                 </div>
                 <div className="flex justify-end  pt-6 rounded-lg">
                   <Button className="bg-blue-900 hover:bg-blue-800 text-lg">
-                    {params.bkt ? 'Submitting' : 'Submit'}
+                    {/* {params.bkt ? 'Submitting' : 'Submit'} */}
+                    Submit
                   </Button>
                 </div>
               </div>
@@ -2337,8 +2339,8 @@ export default function TruckForm({ truckData }) {
                                             currentValue === value
                                               ? ''
                                               : currentValue
-                                          )
-                                          settyOpen(false)
+                                          );
+                                          settyOpen(false);
                                         }}
                                       >
                                         <Check
@@ -2384,7 +2386,8 @@ export default function TruckForm({ truckData }) {
                 </div>
                 <div className="flex justify-end  pt-6 rounded-lg">
                   <Button className="bg-blue-900 hover:bg-blue-800 text-lg">
-                    {params.bkt ? 'Submitting' : 'Submit'}
+                    {/* {params.bkt ? 'Submitting' : 'Submit'} */}
+                    Submit
                   </Button>
                 </div>
               </div>
@@ -2542,7 +2545,7 @@ export default function TruckForm({ truckData }) {
             </div>
           </TabsContent>
         </Tabs>
-      </Form>
+      </form>
     </div>
-  )
+  );
 }

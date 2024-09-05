@@ -1,6 +1,6 @@
-import WrapperWaterfallChart from "~/kendo/charts/waterfall/WrapperWaterfallChart";
+import WrapperWaterfallChart from "@/app/kendo/charts/waterfall/WrapperWaterfallChart";
 
-import { tripData, bikeData } from "~/kendo/rawData/truckData";
+import { tripData, bikeData } from "@/app/kendo/rawData/truckData";
 
 export const reviewTabs = [
   { name: "Month", href: "#", current: true },

@@ -17,11 +17,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { signOut } from '@/auth';
+// import { signOut } from '@/auth';
 
 
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 

@@ -1,6 +1,6 @@
-import WrapperMultiLineChart from '~/kendo/charts/line/WrapperLineChart'
-import WrapperPieChart from '~/kendo/charts/pie/WrapperPieChart';
-import WrapperMultiAreaChart from '~/kendo/charts/area/WrapperAreaChart';
+import WrapperMultiLineChart from '@/app/kendo/charts/line/WrapperLineChart'
+import WrapperPieChart from '@/app/kendo/charts/pie/WrapperPieChart';
+import WrapperMultiAreaChart from '@/app/kendo/charts/area/WrapperAreaChart';
 import {
   orderCategories_m,
   orderSeries_m,
@@ -9,7 +9,7 @@ import {
   
   operationalCat,
   operationalSeries,
-} from '~/kendo/rawData/trans/eoqRawData'
+} from '@/app/kendo/rawData/trans/eoqRawData'
 
 export const reviewTabs = [
   { name: "Month", href: "#", current: true },

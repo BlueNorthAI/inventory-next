@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useCallback,
   useEffect,
@@ -8,10 +10,10 @@ import React, {
   useRef,
 } from 'react'
 import { AgGridReact, CustomCellRendererProps } from 'ag-grid-react' // AG Grid Component
-import { Form, useFetcher } from '@remix-run/react'
+// import { Form, useFetcher } from '@remix-run/react'
 import { Button } from '../ui/button'
-import { CellClassParams, ValueGetterParams, ValueParserParams } from 'ag-grid-enterprise'
-import { generatedAccuracyData } from '~/data/agGrid/snop/demand/forecastAccuracy.js'
+import 'ag-grid-enterprise'
+import { generatedAccuracyData } from '@/app/data/agGrid/snop/demand/forecastAccuracy.js'
 
 const ragCellClassRules: CellClassRules = {
   'rag-green-outer': (params) => params.value === 2008,
@@ -57,10 +59,10 @@ const numberParser = (params: ValueParserParams) => {
   return valueAsNumber
 }
 
-export default function InventoryProjection() {
+export default function InventoryProjection({data}) {
 
   const gridRef = useRef()
-  const fetcher = useFetcher()
+  // const fetcher = useFetcher()
   const [rowData, setRowData] = useState([])
   const [gridApi, setGridApi] = useState(null)
 
@@ -274,34 +276,34 @@ export default function InventoryProjection() {
     },
   ]
 
-  const onGridReady = useCallback((params) => {
-    setGridApi(params.api)
-    loadData()
-  }, [])
+  // const onGridReady = useCallback((params) => {
+  //   setGridApi(params.api)
+  //   loadData()
+  // }, [])
 
-  // Function to load data
-  const loadData = useCallback(() => {
-    // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
-    fetcher.load('/rInventoryProjection') // Adjust endpoint as necessary
-  }, [fetcher])
+  // // Function to load data
+  // const loadData = useCallback(() => {
+  //   // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
+  //   fetcher.load('/rInventoryProjection') // Adjust endpoint as necessary
+  // }, [fetcher])
 
-  // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
-      setRowData(fetcher.data.data)
-    }
-  }, [fetcher.data])
+  // // Effect to update row data when fetcher data changes
+  // useEffect(() => {
+  //   if (fetcher.data) {
+  //     setRowData(fetcher.data.data)
+  //   }
+  // }, [fetcher.data])
 
   return (
     <div
       className="ag-theme-quartz h-[750px] w-full overflow-y-auto">
-      <Form method="post">
+      <form method="post">
         <AgGridReact
           ref={gridRef}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          onGridReady={onGridReady}
+          // onGridReady={onGridReady}
           domLayout="autoHeight"
           getRowId={getRowId}
           enableRangeSelection={true}
@@ -329,7 +331,7 @@ export default function InventoryProjection() {
           // onCellValueChanged={onCellValueChanged}
           // rowGroupPanelShow="always"
         />
-      </Form>
+      </form>
     </div>
   )
 }

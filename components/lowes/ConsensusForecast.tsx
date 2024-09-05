@@ -1,78 +1,82 @@
+'use client';
+
 import React, {
   useCallback,
   useEffect,
-  useState,
   useMemo,
-  memo,
-  Children,
   useRef,
-} from 'react'
-import { AgGridReact, CustomCellRendererProps } from 'ag-grid-react' // AG Grid Component
-// import { Form, useFetcher } from '@remix-run/react'
-import { Button } from '../ui/button'
-import { CellClassParams, ValueGetterParams, ValueParserParams } from 'ag-grid-enterprise'
-// import { generatedAccuracyData } from '~/data/agGrid/snop/demand/forecastAccuracy.js'
+  useState
+} from 'react';
+import { AgGridReact, CustomCellRendererProps } from 'ag-grid-react';
+import 'ag-grid-enterprise';
+import { Button } from '../ui/button'; // Adjust the import path as necessary
+import { CellClassParams, ValueParserParams } from 'ag-grid-enterprise';
 
-
-
+// Define cell class rules for conditional styling
 const ragCellClassRules: CellClassRules = {
   'rag-green-outer': (params) => params.value === 2008,
   'rag-blue-outer': (params) => params.value === 2004,
-  'rag-red-outer': (params) => params.value === 2000,
-}
+  'rag-red-outer': (params) => params.value === 2000
+};
 
+// Define a function to set the cell style based on conditions
 const cellStyle = (params: CellClassParams) => {
-  // console.log(params)
-  const color = numberToColor(params)
+  const color = numberToColor(params);
   return {
-    backgroundColor: color,
-  }
-}
+    backgroundColor: color
+  };
+};
 
-const numberToColor = (params: object) => {
-  // console.log(`params`, params)
-  if (params.data.measure === 'Target Plan (Revenue)' || params.data.measure === 'Financial Forecast (Revenue)' || params.data.measure === 'POS (Revenue)' || params.data.measure === 'Weighted Sales Price') {
-    return ''
+// Function to determine the background color based on value
+const numberToColor = (params) => {
+  if (
+    [
+      'Target Plan (Revenue)',
+      'Financial Forecast (Revenue)',
+      'POS (Revenue)',
+      'Weighted Sales Price'
+    ].includes(params.data.measure)
+  ) {
+    return '';
   }
   if (params.data.measure === 'Achievement Rate') {
     if (params.value < 75) {
-      return '#ffaaaa'
+      return '#ffaaaa';
     }
     if (params.value < 90) {
-      return '#fef9c3'
+      return '#fef9c3';
     }
-    return '#aaffaa'
+    return '#aaffaa';
   }
- 
-}
+};
 
+// Custom cell renderer for displaying values
 const ragRenderer = (params: CustomCellRendererProps) => {
-  return <span className="rag-element">{params.value}</span>
-}
+  return <span className="rag-element">{params.value}</span>;
+};
 
+// Value parser function to convert input to a numeric value
 const numberParser = (params: ValueParserParams) => {
-  const newValue = params.newValue
-  console.log(`newValue`, newValue)
-  let valueAsNumber
+  const newValue = params.newValue;
+  let valueAsNumber;
   if (newValue === null || newValue === undefined || newValue === '') {
-    valueAsNumber = null
+    valueAsNumber = null;
   } else {
-    valueAsNumber = parseFloat(params.newValue)
+    valueAsNumber = parseFloat(params.newValue);
   }
-  return valueAsNumber
-}
+  return valueAsNumber;
+};
 
-export default function ConsensusForecast() {
-
-  const gridRef = useRef()
-  const fetcher = useFetcher()
-  const [rowData, setRowData] = useState([])
-  const [gridApi, setGridApi] = useState(null)
-
+export default function ConsensusForecast({ data }) {
+  const gridRef = useRef();
+  const [rowData, setRowData] = useState([]);
   const getRowId = useCallback((params) => {
-    return params.data.id
-  }, [])
+    return params.data.id;
+  }, []);
 
+  useEffect(() => {
+    setRowData(data);
+  }, [data]);
 
   const defaultColDef = useMemo(
     () => ({
@@ -82,10 +86,10 @@ export default function ConsensusForecast() {
       minWidth: 100,
       floatingFilter: true,
       wrapHeaderText: true,
-      autoHeaderHeight: true,
+      autoHeaderHeight: true
     }),
     []
-  )
+  );
 
   const columnDefs = [
     {
@@ -98,51 +102,44 @@ export default function ConsensusForecast() {
           filter: 'agTextColumnFilter',
           flex: 2,
           rowGroup: true,
-          hide: true,
+          hide: true
         },
-
         {
           field: 'site',
           colId: 'site',
           filter: 'agTextColumnFilter',
           flex: 2,
           rowGroup: true,
-          hide: true,
+          hide: true
         },
         {
           field: 'item',
           headerName: 'Item',
           filter: 'agTextColumnFilter',
           flex: 2,
-
           rowGroup: true,
-          hide: true,
-          // pinned: 'left',
-          // lockPinned: true,
-
-          // pivot: true,
+          hide: true
         },
         {
           field: 'measure',
           filter: 'agTextColumnFilter',
-          flex: 2,
-        },
-      ],
+          flex: 2
+        }
+      ]
     },
     {
       headerName: '2024Q1',
       marryChildren: true,
-
       children: [
         {
           headerName: 'AnnualTotal',
           valueGetter: (p) => {
             return Math.floor(
               p.data['2024-Jan'] + p.data['2024-Feb'] + p.data['2024-Mar']
-            ).toLocaleString()
+            ).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'open',
+          columnGroupShow: 'open'
         },
         {
           field: '2024-Jan',
@@ -150,10 +147,10 @@ export default function ConsensusForecast() {
           filter: 'agNumberColumnFilter',
           cellClass: 'rag-blue',
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Feb',
@@ -162,11 +159,11 @@ export default function ConsensusForecast() {
           type: 'numericColumn',
           cellClass: 'rag-blue',
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           columnGroupShow: 'closed',
           cellClassRules: ragCellClassRules,
-          cellRenderer: ragRenderer,
+          cellRenderer: ragRenderer
         },
         {
           field: '2024-Mar',
@@ -175,11 +172,11 @@ export default function ConsensusForecast() {
           type: 'numericColumn',
           cellClass: 'rag-blue',
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
-        },
-      ],
+          columnGroupShow: 'closed'
+        }
+      ]
     },
     {
       headerName: '2024Q2',
@@ -187,7 +184,6 @@ export default function ConsensusForecast() {
       flex: 2,
       showRowGroup: '2024',
       cellRenderer: 'agGroupCellRenderer',
-
       children: [
         {
           headerName: 'AnnualTotal',
@@ -197,11 +193,11 @@ export default function ConsensusForecast() {
               Math.floor(
                 p.data['2024-Apr'] + p.data['2024-May'] + p.data['2024-Jun']
               ).toLocaleString()
-            )
+            );
           },
           cellStyle: cellStyle,
           type: 'numericColumn',
-          columnGroupShow: 'open',
+          columnGroupShow: 'open'
         },
         {
           field: '2024-Apr',
@@ -210,10 +206,10 @@ export default function ConsensusForecast() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-May',
@@ -223,9 +219,9 @@ export default function ConsensusForecast() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Jun',
@@ -235,11 +231,11 @@ export default function ConsensusForecast() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
-        },
-      ],
+          columnGroupShow: 'closed'
+        }
+      ]
     },
     {
       headerName: '2024Q3',
@@ -247,7 +243,6 @@ export default function ConsensusForecast() {
       flex: 2,
       showRowGroup: '2024',
       cellRenderer: 'agGroupCellRenderer',
-
       children: [
         {
           headerName: 'AnnualTotal',
@@ -257,11 +252,10 @@ export default function ConsensusForecast() {
               Math.floor(
                 p.data['2024-Jul'] + p.data['2024-Aug'] + p.data['2024-Sep']
               ).toLocaleString()
-            )
+            );
           },
-
           type: 'numericColumn',
-          columnGroupShow: 'open',
+          columnGroupShow: 'open'
         },
         {
           field: '2024-Jul',
@@ -270,10 +264,10 @@ export default function ConsensusForecast() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Aug',
@@ -283,9 +277,9 @@ export default function ConsensusForecast() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Sep',
@@ -295,69 +289,29 @@ export default function ConsensusForecast() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
-        },
-      ],
-    },
-  ]
-
-  const onGridReady = useCallback((params) => {
-    setGridApi(params.api)
-    loadData()
-  }, [])
-
-  // Function to load data
-  const loadData = useCallback(() => {
-    // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
-    fetcher.load('/rConsensusForecast') // Adjust endpoint as necessary
-  }, [fetcher])
-
-  // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
-      setRowData(fetcher.data.data)
+          columnGroupShow: 'closed'
+        }
+      ]
     }
-  }, [fetcher.data])
+  ];
 
   return (
     <div className="ag-theme-quartz" style={{ height: '100%', width: '100%' }}>
-      <form method="post">
-        <AgGridReact
-          ref={gridRef}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          rowData={rowData}
-          onGridReady={onGridReady}
-          domLayout="autoHeight"
-          getRowId={getRowId}
-          enableRangeSelection={true}
-          groupDisplayType="groupRows"
-          enableCharts={true}
-          sideBar={true}
-          groupDefaultExpanded={3}
-          // autoGroupColumnDef={autoGroupColumnDef}
-          // groupHideOpenParents={true}
-          // pagination={pagination}
-          // paginationPageSize={paginationPageSize}
-          // paginationPageSizeSelector={paginationPageSizeSelector}
-          // rowClassRules={rowClassRules}
-          // rowSelection="multiple"
-          // rowHeight={50}
-          // rowBuffer={0}
-          // rowModelType="clientSide"
-          // enableRangeSelection={true}
-          // isRowSelectable={isRowSelectable}
-          // pagination={true}
-          // paginationPageSize={10}
-          // suppressPaginationPanel={false}
-          // groupDisplayType="groupRows"
-          // pivotMode={true}
-          // onCellValueChanged={onCellValueChanged}
-          // rowGroupPanelShow="always"
-        />
-      </form>
+      <AgGridReact
+        ref={gridRef}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        rowData={rowData}
+        domLayout="autoHeight"
+        getRowId={getRowId}
+        enableRangeSelection={true}
+        groupDisplayType="groupRows"
+        enableCharts={true}
+        sideBar={true}
+        groupDefaultExpanded={3}
+      />
     </div>
-  )
+  );
 }

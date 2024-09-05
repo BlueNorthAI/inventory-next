@@ -1,3 +1,4 @@
+'use client';
 import React, {
   useCallback,
   useEffect,
@@ -5,74 +6,74 @@ import React, {
   useMemo,
   memo,
   Children,
-  useRef,
-} from 'react'
-import { AgGridReact, CustomCellRendererProps } from 'ag-grid-react' // AG Grid Component
-import { Form, useFetcher } from '@remix-run/react'
-import { Button } from '../ui/button'
-import { CellClassParams, ValueGetterParams, ValueParserParams } from 'ag-grid-enterprise'
-import { generatedAccuracyData } from '~/data/agGrid/snop/demand/forecastAccuracy.js'
+  useRef
+} from 'react';
+import { AgGridReact, CustomCellRendererProps } from 'ag-grid-react'; // AG Grid Component
+// import { Form, useFetcher } from '@remix-run/react';
+
+import 'ag-grid-enterprise';
 
 
 
 const ragCellClassRules: CellClassRules = {
   'rag-green-outer': (params) => params.value === 2008,
   'rag-blue-outer': (params) => params.value === 2004,
-  'rag-red-outer': (params) => params.value === 2000,
-}
+  'rag-red-outer': (params) => params.value === 2000
+};
 
 const cellStyle = (params: CellClassParams) => {
   // console.log(params)
-  const color = numberToColor(params)
+  const color = numberToColor(params);
   return {
-    backgroundColor: color,
-  }
-}
+    backgroundColor: color
+  };
+};
 
 const numberToColor = (params: object) => {
-
-  if (params.data.measure === 'Target Plan (Revenue)' || params.data.measure === 'Financial Forecast (Revenue)' || params.data.measure === 'POS (Revenue)' || params.data.measure === 'Weighted Sales Price') {
-    return ''
+  if (
+    params.data.measure === 'Target Plan (Revenue)' ||
+    params.data.measure === 'Financial Forecast (Revenue)' ||
+    params.data.measure === 'POS (Revenue)' ||
+    params.data.measure === 'Weighted Sales Price'
+  ) {
+    return '';
   }
   if (params.data.measure === 'Achievement Rate') {
     if (params.value < 75) {
-      return '#ffaaaa'
+      return '#ffaaaa';
     }
     if (params.value < 90) {
-      return '#fef9c3'
+      return '#fef9c3';
     }
-    return '#aaffaa'
+    return '#aaffaa';
   }
- 
-}
+};
 
 const ragRenderer = (params: CustomCellRendererProps) => {
-  return <span className="rag-element">{params.value}</span>
-}
+  return <span className="rag-element">{params.value}</span>;
+};
 
 const numberParser = (params: ValueParserParams) => {
-  const newValue = params.newValue
+  const newValue = params.newValue;
 
-  let valueAsNumber
+  let valueAsNumber;
   if (newValue === null || newValue === undefined || newValue === '') {
-    valueAsNumber = null
+    valueAsNumber = null;
   } else {
-    valueAsNumber = parseFloat(params.newValue)
+    valueAsNumber = parseFloat(params.newValue);
   }
-  return valueAsNumber
-}
+  return valueAsNumber;
+};
 
-export default function InventoryOnHand() {
-
-  const gridRef = useRef()
-  const fetcher = useFetcher()
-  const [rowData, setRowData] = useState([])
-  const [gridApi, setGridApi] = useState(null)
+export default function InventoryOnHand({data}) {
+  const gridRef = useRef();
+  // const fetcher = useFetcher();
+  const [rowData, setRowData] = useState([]);
+  const [gridApi, setGridApi] = useState(null);
 
   const getRowId = useCallback((params) => {
-    return params.data.id
-  }, [])
-
+    return params.data.id;
+  }, []);
 
   const defaultColDef = useMemo(
     () => ({
@@ -82,10 +83,10 @@ export default function InventoryOnHand() {
       minWidth: 100,
       floatingFilter: true,
       wrapHeaderText: true,
-      autoHeaderHeight: true,
+      autoHeaderHeight: true
     }),
     []
-  )
+  );
 
   const columnDefs = [
     {
@@ -98,7 +99,7 @@ export default function InventoryOnHand() {
           filter: 'agTextColumnFilter',
           flex: 2,
           rowGroup: true,
-          hide: true,
+          hide: true
         },
 
         {
@@ -107,7 +108,7 @@ export default function InventoryOnHand() {
           filter: 'agTextColumnFilter',
           flex: 2,
           rowGroup: true,
-          hide: true,
+          hide: true
         },
         {
           field: 'item',
@@ -116,7 +117,7 @@ export default function InventoryOnHand() {
           flex: 2,
 
           rowGroup: true,
-          hide: true,
+          hide: true
           // pinned: 'left',
           // lockPinned: true,
 
@@ -125,9 +126,9 @@ export default function InventoryOnHand() {
         {
           field: 'measure',
           filter: 'agTextColumnFilter',
-          flex: 2,
-        },
-      ],
+          flex: 2
+        }
+      ]
     },
     {
       headerName: '2024Q1',
@@ -139,10 +140,10 @@ export default function InventoryOnHand() {
           valueGetter: (p) => {
             return Math.floor(
               p.data['2024-Jan'] + p.data['2024-Feb'] + p.data['2024-Mar']
-            ).toLocaleString()
+            ).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'open',
+          columnGroupShow: 'open'
         },
         {
           field: '2024-Jan',
@@ -150,10 +151,10 @@ export default function InventoryOnHand() {
           filter: 'agNumberColumnFilter',
           cellClass: 'rag-blue',
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Feb',
@@ -162,11 +163,11 @@ export default function InventoryOnHand() {
           type: 'numericColumn',
           cellClass: 'rag-blue',
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           columnGroupShow: 'closed',
           cellClassRules: ragCellClassRules,
-          cellRenderer: ragRenderer,
+          cellRenderer: ragRenderer
         },
         {
           field: '2024-Mar',
@@ -175,11 +176,11 @@ export default function InventoryOnHand() {
           type: 'numericColumn',
           cellClass: 'rag-blue',
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
-        },
-      ],
+          columnGroupShow: 'closed'
+        }
+      ]
     },
     {
       headerName: '2024Q2',
@@ -197,11 +198,11 @@ export default function InventoryOnHand() {
               Math.floor(
                 p.data['2024-Apr'] + p.data['2024-May'] + p.data['2024-Jun']
               ).toLocaleString()
-            )
+            );
           },
           cellStyle: cellStyle,
           type: 'numericColumn',
-          columnGroupShow: 'open',
+          columnGroupShow: 'open'
         },
         {
           field: '2024-Apr',
@@ -210,10 +211,10 @@ export default function InventoryOnHand() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-May',
@@ -223,9 +224,9 @@ export default function InventoryOnHand() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Jun',
@@ -235,11 +236,11 @@ export default function InventoryOnHand() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
-        },
-      ],
+          columnGroupShow: 'closed'
+        }
+      ]
     },
     {
       headerName: '2024Q3',
@@ -257,11 +258,11 @@ export default function InventoryOnHand() {
               Math.floor(
                 p.data['2024-Jul'] + p.data['2024-Aug'] + p.data['2024-Sep']
               ).toLocaleString()
-            )
+            );
           },
 
           type: 'numericColumn',
-          columnGroupShow: 'open',
+          columnGroupShow: 'open'
         },
         {
           field: '2024-Jul',
@@ -270,10 +271,10 @@ export default function InventoryOnHand() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
           type: 'numericColumn',
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Aug',
@@ -283,9 +284,9 @@ export default function InventoryOnHand() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
+          columnGroupShow: 'closed'
         },
         {
           field: '2024-Sep',
@@ -295,41 +296,41 @@ export default function InventoryOnHand() {
           valueParser: numberParser,
           cellStyle: cellStyle,
           valueFormatter: (p) => {
-            return Math.floor(p.value).toLocaleString()
+            return Math.floor(p.value).toLocaleString();
           },
-          columnGroupShow: 'closed',
-        },
-      ],
-    },
-  ]
+          columnGroupShow: 'closed'
+        }
+      ]
+    }
+  ];
 
-  const onGridReady = useCallback((params) => {
-    setGridApi(params.api)
-    loadData()
-  }, [])
+  // const onGridReady = useCallback((params) => {
+  //   setGridApi(params.api);
+  //   loadData();
+  // }, []);
 
-  // Function to load data
-  const loadData = useCallback(() => {
-    // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
-    fetcher.load('/rInventoryOnHand') // Adjust endpoint as necessary
-  }, [fetcher])
+  // // Function to load data
+  // const loadData =   useCallback(() => {
+  // //   // fetcher.load("/rLevelMaster?page=1&limit=100"); // Adjust endpoint as necessary
+  // //   fetcher.load('/rInventoryOnHand'); // Adjust endpoint as necessary
+  // // }, [fetcher]);
 
   // Effect to update row data when fetcher data changes
-  useEffect(() => {
-    if (fetcher.data) {
-      setRowData(fetcher.data.data)
-    }
-  }, [fetcher.data])
+  // useEffect(() => {
+  //   if (fetcher.data) {
+  //     setRowData(fetcher.data.data);
+  //   }
+  // }, [fetcher.data]);
 
   return (
-    <div className="ag-theme-quartz h-[750px] w-full overflow-y-auto" >
-      <Form method="post">
+    <div className="ag-theme-quartz h-[750px] w-full overflow-y-auto">
+      <form method="post">
         <AgGridReact
           ref={gridRef}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowData={rowData}
-          onGridReady={onGridReady}
+          // onGridReady={onGridReady}
           domLayout="autoHeight"
           getRowId={getRowId}
           enableRangeSelection={true}
@@ -357,7 +358,7 @@ export default function InventoryOnHand() {
           // onCellValueChanged={onCellValueChanged}
           // rowGroupPanelShow="always"
         />
-      </Form>
+      </form>
     </div>
-  )
+  );
 }

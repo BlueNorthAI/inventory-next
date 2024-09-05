@@ -1,12 +1,12 @@
-import WrapperMultiLineChart from '~/kendo/charts/line/WrapperLineChart'
-import WrapperPieChart from '~/kendo/charts/pie/WrapperPieChart';
+import WrapperMultiLineChart from '@/app/kendo/charts/line/WrapperLineChart'
+import WrapperPieChart from '@/app/kendo/charts/pie/WrapperPieChart';
 import {
   orderCategories_m,
   orderSeries_m,
   rawMatCategories_m,
   rawMatSeries_m,
   orderChartSeries,
-} from '~/kendo/rawData/trans/dcRawData'
+} from '@/app/kendo/rawData/trans/dcRawData'
 
 export const reviewTabs = [
   { name: "Month", href: "#", current: true },

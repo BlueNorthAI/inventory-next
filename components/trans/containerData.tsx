@@ -1,5 +1,5 @@
-import WrapperMultiColumnChart from '~/kendo/charts/column/WrapperColumnChart';
-import WrapperMultiAreaChart from '~/kendo/charts/area/WrapperAreaChart';
+import WrapperMultiColumnChart from '@/app/kendo/charts/column/WrapperColumnChart';
+import WrapperMultiAreaChart from '@/app/kendo/charts/area/WrapperAreaChart';
 import {
  truckEmptyCat,
 truckEmptySeries,
@@ -7,7 +7,7 @@ truckQueueCat,
 truckQueueSeries,
 QuayCat,
 Quayeries
-} from '~/kendo/rawData/trans/containerRawData'
+} from '@/app/kendo/rawData/trans/containerRawData'
 
 export const reviewTabs = [
   { name: "Month", href: "#", current: true },

@@ -1,8 +1,9 @@
 import React from 'react'
 import CardLayout from '../snop/CardLayout'
-import { kpiService_m } from '~/components/ss/dcData'
+import { kpiService_m } from '@/components/ss/dcData'
 import { ProgressBar } from '@progress/kendo-react-progressbars'
-import { Link } from '@remix-run/react'
+// import { Link } from '@remix-run/react'
+import Link from 'next/link'
 
 import {
   LightBulbIcon,
@@ -48,7 +49,7 @@ export default function ResultOverall() {
               <div className="-mt-px flex divide-x divide-gray-200 bg-gray-50 h-10 ">
                 <div className="flex w-0 flex-1  ">
                   <Link
-                    to={kpi.Analyze}
+                    href={kpi.Analyze}
                     className="relative -mr-px inline-flex flex-1 items-center justify-center gap-x-2 border border-transparent text-sm font-semibold hover:bg-rose-500 hover:text-white"
                   >
                     <span className="py-4 inline-flex flex-1 items-cente justify-center gap-x-3 text-sm font-semibold hover:text-white">
@@ -63,7 +64,7 @@ export default function ResultOverall() {
 
                 <div className="-ml-px flex flex-1">
                   <Link
-                    to="/demo/dashboard/salesExp"
+                    href="/demo/dashboard/salesExp"
                     className="relative -mr-px inline-flex flex-1 items-center justify-center gap-x-2  border border-transparent text-sm font-semibold  hover:bg-rose-500 hover:text-white"
                   >
                     <span className="py-4 inline-flex flex-1 items-cente justify-center gap-x-3 text-sm font-semibold hover:text-white">
@@ -74,7 +75,7 @@ export default function ResultOverall() {
                 </div>
                 <div className="-ml-px flex  flex-1">
                   <Link
-                    to="/benchmark"
+                    href="/benchmark"
                     className="relative -mr-px inline-flex flex-1 items-center justify-center gap-x-2  border border-transparent text-sm font-semibold hover:bg-rose-500 hover:text-white"
                   >
                     <span className="py-4 inline-flex flex-1 items-cente justify-center gap-x-3 text-sm font-semibold hover:text-white">

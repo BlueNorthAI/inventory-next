@@ -1,4 +1,4 @@
-import { AgChartsReact } from 'ag-charts-react'
+import { AgCharts } from 'ag-charts-react'
 
 // import { topology } from './topology'
 import {
@@ -7,13 +7,13 @@ import {
   ferryTopology,
   backgroundTopology,
   capitals,
-} from '~/data/network/mapData/laneData/topology'
+} from '@/app/data/network/mapData/laneData/topology'
 
-import CardLayout from '~/components/snop/CardLayout'
+
 import 'ag-charts-enterprise' // Import AgCharts Enterprise if needed
 
 import { ProgressBar } from '@progress/kendo-react-progressbars'
-import { Link } from '@remix-run/react'
+
 
 const flightData = [
   { name: 'SHA-FL', duration: 20 },
@@ -214,7 +214,7 @@ export default function LaneMap() {
       </ul>
 
       <div className="w-full h-[700px] ">
-        <AgChartsReact options={options} />
+        <AgCharts options={options} />
      
       </div>
     </div>

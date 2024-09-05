@@ -1,7 +1,9 @@
+"use client";
+
 import React, { Fragment, useState, useCallback, useRef } from 'react'
-import { AgChartsReact } from 'ag-charts-react'
-import { AgCharts } from 'ag-charts-community'
-import { getData } from '~/data/agGrid/snop/inventory/simulationChart'
+import { AgCharts } from 'ag-charts-react'
+
+import { getData } from '@/app/data/agGrid/snop/inventory/simulationChart'
 
 function tooltipRenderer({ datum, xKey, yKey }) {
   return { content: `${datum[xKey]}: ${datum[yKey]}%` }
@@ -114,7 +116,7 @@ export default function SimulationChart() {
 
   return (
     <div className="flex h-[700px] flex-col">
-      <AgChartsReact ref={chartRef} options={options} />
+      <AgCharts ref={chartRef} options={options} />
     </div>
   )
 }

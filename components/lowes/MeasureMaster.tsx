@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react";
-import { AgGridReact } from "ag-grid-react"; // AG Grid Component
+'use client';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 // import { Form, useFetcher } from "@remix-run/react";
 // Optional Theme applied to the grid
 // import "ag-grid-enterprise"; // Required for AG Grid Enterprise features
@@ -9,9 +10,9 @@ export default function MeasureMaster() {
   // const fetcher = useFetcher();
   const [rowData, setRowData] = useState([]);
   const [gridApi, setGridApi] = useState(null);
-  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), [])
-  
-  const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), [])
+  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
+
+  const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
 
   const defaultColDef = {
     sortable: true,
@@ -23,10 +24,10 @@ export default function MeasureMaster() {
     minWidth: 100,
     wrapHeaderText: true,
     autoHeaderHeight: true,
-    initialWidth: 200,
+    initialWidth: 200
     // enableRowGroup: true,
     // headerCheckboxSelection: true,
-  }
+  };
 
   const columnDefs = [
     // {
@@ -40,52 +41,52 @@ export default function MeasureMaster() {
       filter: 'agNumberColumnFilter',
       checkboxSelection: true,
       headerCheckboxSelection: true,
-      pinned:true,
+      pinned: true
       // rowGroup: true,
     },
     {
       field: 'measure_code',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
       // rowGroup: true,
     },
     {
       field: 'measure_description',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
       // rowGroup: true,
     },
     {
       field: 'measure_type',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
     },
     {
       field: 'number_format',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
     },
     {
       field: 'column_name',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
     },
     {
       field: 'rw_flag',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
     },
     {
       field: 'computation_type',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
     },
     {
       field: 'expression',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
     },
     {
       field: 'aggregation',
-      filter: 'agTextColumnFilter',
+      filter: 'agTextColumnFilter'
     },
     {
       field: 'disaggregation',
-      filter: 'agTextColumnFilter',
-    },
-  ]
+      filter: 'agTextColumnFilter'
+    }
+  ];
 
   // const onCellValueChanged = useCallback(
   //   (event) => {
@@ -127,7 +128,7 @@ export default function MeasureMaster() {
   // // Effect to update row data when fetcher data changes
   // useEffect(() => {
   //   if (fetcher.data) {
-   
+
   //     setRowData(fetcher.data.data);
   //   }
   // }, [fetcher.data]);
@@ -140,7 +141,7 @@ export default function MeasureMaster() {
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             rowData={rowData}
-            onGridReady={onGridReady}
+            // onGridReady={onGridReady}
             pagination={true}
             paginationPageSize={20}
             suppressPaginationPanel={false}
@@ -156,5 +157,5 @@ export default function MeasureMaster() {
         </form>
       </div>
     </div>
-  )
+  );
 }

@@ -1,134 +1,654 @@
 'use client';
 
-import { Fragment, useState } from 'react';
-import Link from 'next/link';
-import { Menu, Transition } from '@headlessui/react';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { PrinterIcon } from '@heroicons/react/24/outline';
 import {
-  BanknotesIcon,
-  PresentationChartLineIcon,
-  CubeIcon,
-  ArchiveBoxArrowDownIcon,
-  ScaleIcon,
-  ArrowTrendingUpIcon,
-  TruckIcon,
-  ChevronDownIcon,
-  RocketLaunchIcon
-} from '@heroicons/react/20/solid';
+  FilePlusIcon,
+  Pencil2Icon,
+  TrashIcon,
+  DownloadIcon
+} from '@radix-ui/react-icons';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+import { columnsmeeting } from '@/components/datatable/columns-meeting';
+import { DataTable } from '@/components/datatable/data-table-meeting';
+import taskData from '@/app/data/columndata/tasks.json';
+
+import DemandPlanning from '@/components/lowes/DemandPlanning';
+import ConsensusForecast from '@/components/lowes/ConsensusForecast';
+import { generatedAccuracyData } from '@/app/data/ag-table/forcastDemand';
+import { generatedForecastData } from '@/app/data/ag-table/consensusForecast';
+import { demandPlanningData } from '@/app/data/ag-table/demandPlanning';
+import ForecastDemand from '@/components/lowes/ForecastDemand';
+import { cn } from '@/lib/utils';
+
+// async function getTasks() {
+//   const data = await taskData;
+//   return data;
+// }
+
+// export const loader = async () => {
+//   const tasks = await getTasks();
+//   const demandData = tasks.filter(
+//     (task) => task.label === 'Demand Planning' && task.severity === 'High'
+//   );
+//   // console.log('demandData', demandData)
+//   return json({ tasks, demandData });
+// };
+
+function DemoContainer({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn(
+        'flex items-center justify-center [&>div]:w-full',
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
-const components = [
-  {
-    title: 'Demand Review',
-    to: '/snop/process',
-    icon: RocketLaunchIcon,
-    iconcolr: 'text-blue-500'
-  },
-  {
-    title: 'Supply Review',
-    to: '/snop/process/supply',
-    icon: CubeIcon
-  },
-  {
-    title: 'Inventory Review',
-    to: '/snop/process/inventory',
-    icon: ArchiveBoxArrowDownIcon
-  },
-  {
-    title: 'Distribution Meeting',
-    to: '/snop/process/distribution',
-    icon: TruckIcon
-  },
-  {
-    title: 'New Product Review',
-    to: '/snop/process/product',
-    icon: ArrowTrendingUpIcon
-  },
+export default function ProcessIndex() {
+  const [position, setPosition] = React.useState('bottom');
 
-  {
-    title: 'Demand Supply Balancing',
-    to: '/snop/process/balance',
-    icon: ScaleIcon
-  },
-  {
-    title: 'Financial Planning',
-    to: '/snop/process/finance',
-    icon: BanknotesIcon
-  },
-  {
-    title: 'Executive Meeting',
-    to: '/snop/process/executive',
-    icon: PresentationChartLineIcon
-  }
-];
-
-export default function ProcessData({ children }: { children: React.ReactNode }) {
-  const [selectedProcess, setSelectedProcess] = useState('Process');
   return (
     <>
-      <div>
-        <div className="w-100 m-2 flex  justify-between p-4 rounded-lg border bg-white">
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-sky-700 to-blue-700 font-display">
-            Sales & Operations Planning
-          </h2>
+      <div className="m-4">
+        <Tabs defaultValue="meeting" className="tracking-normal">
+          <div className="">
+            {/* <h1 className="text-3xl font-bold">Demand Review</h1> */}
+            <TabsList className="">
+              <TabsTrigger value="meeting" className="relative">
+                Meeting
+              </TabsTrigger>
+              <TabsTrigger value="Demand" className="relative">
+                Forecast Accuracy
+              </TabsTrigger>
+              {/* <TabsTrigger className="" value="New">
+                Customer Forecasts
+              </TabsTrigger> */}
+              <TabsTrigger className="" value="Consensus">
+                Demand Consensus
+              </TabsTrigger>
+              <TabsTrigger className="" value="DemandSupply">
+                Demand Plan
+              </TabsTrigger>
+            </TabsList>
+          </div>
+          <DemoContainer>
+            <TabsContent value="meeting">
+              <div className="flex items-center justify-center  rounded-t-lg bg-gradient-to-t from-indigo-400 via-cyan-400 to-sky-500 shadow-lg p-0.5">
+                <div className=" flex items-center w-full justify-between bg-sky-50  border rounded-t-lg text-2xl text-blue-900 font-bold">
+                  <div className="p-2">Demand Review</div>
+                  <div className="m-2 space-x-1">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Timeline</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-28">
+                        <DropdownMenuLabel>View Type</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {/* <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={setPosition}
+                        >
+                          <DropdownMenuRadioItem value="top">
+                            Weekly
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="bottom">
+                            Monthly
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="right">
+                            Quarterly
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup> */}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
 
-          <div className="flex items-center justify-end">
-            <Menu as="div" className="relative inline-block text-left">
-              <div>
-                <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                  {selectedProcess}
-                  <ChevronDownIcon
-                    className="-mr-1 h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Plan</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-28">
+                        <DropdownMenuLabel>Plan Type</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={setPosition}
+                        >
+                          <DropdownMenuRadioItem value="top">
+                            Jan'24
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="bottom">
+                            Feb 2024
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="right">
+                            Mar 2024
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
+              </div>
+              <div className="">
+                <DataTable data={taskData} columns={columnsmeeting} />
+              </div>
+            </TabsContent>
+            <TabsContent value="Demand">
+              <div className="flex items-center justify-center  rounded-t-lg bg-gradient-to-t from-indigo-400 via-cyan-400 to-sky-500 shadow-lg p-0.5">
+                <div className=" flex items-center w-full justify-between bg-sky-50  border rounded-t-lg text-2xl text-blue-900 font-bold">
+                  <div className="p-2">Forecast Accuracy</div>
+                  <div className="m-2 space-x-1">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Timeline</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-28">
+                        <DropdownMenuLabel>View Type</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={setPosition}
+                        >
+                          <DropdownMenuRadioItem value="top">
+                            Weekly
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="bottom">
+                            Monthly
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="right">
+                            Quarterly
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Plan</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-28">
+                        <DropdownMenuLabel>Plan Type</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {/* <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={setPosition}
+                        >
+                          <DropdownMenuRadioItem value="top">
+                            Jan'24
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="bottom">
+                            Feb 2024
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="right">
+                            Mar 2024
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup> */}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
               </div>
 
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
-                  {components.map((component) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className="py-1 ">
-                      <Menu.Item
-                        key={component.title}
-                        onClick={() => setSelectedProcess(component.title)}
-                      >
-                        {({ active }) => (
-                          <Link
-                            href={component.to}
-                            className={classNames(
-                              active
-                                ? 'bg-sky-100  text-sky-500 border border-sky-500 '
-                                : 'text-gray-700',
-                              'group flex items-center px-4 py-2 text-sm '
-                            )}
+              <div>
+                <ForecastDemand data={generatedAccuracyData} />
+              </div>
+            </TabsContent>
+            {/* <TabsContent value="New">
+              <div className="flex items-center justify-center  rounded-t-lg bg-gradient-to-t from-indigo-400 via-cyan-400 to-sky-500 shadow-lg p-0.5">
+                <div className=" flex items-center w-full justify-between bg-sky-50  border rounded-t-lg text-2xl text-blue-900 font-bold">
+                  <div className="p-2">New Product Review</div>
+
+                  <div className="m-2 space-x-1">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-indigo-100 "
                           >
-                            <component.icon
-                              className="mr-3 h-5 w-5 text-gray-400 hover:text-sky-500 rounded-lg"
-                              aria-hidden="true"
-                            />
-                            {component.title}
-                          </Link>
-                        )}
-                      </Menu.Item>
-                    </div>
-                  ))}
-                </Menu.Items>
-              </Transition>
-            </Menu>
-          </div>
-        </div>
-        <>{children}</>
+                            <FilePlusIcon className="text-indigo-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>New</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-purple-100"
+                          >
+                            <Pencil2Icon className="text-purple-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Edit</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-red-100"
+                          >
+                            <TrashIcon className="text-red-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Delete</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-yellow-100"
+                          >
+                            <PrinterIcon className="text-yellow-800 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Print</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-green-100"
+                          >
+                            <DownloadIcon className="text-green-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Download</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
+              </div>
+
+              <div>New Product Review</div>
+            </TabsContent> */}
+            <TabsContent value="Consensus">
+              <div className="flex items-center justify-center  rounded-t-lg bg-gradient-to-t from-indigo-400 via-cyan-400 to-sky-500 shadow-lg p-0.5">
+                <div className=" flex items-center w-full justify-between bg-sky-50  border rounded-t-lg text-2xl text-blue-900 font-bold">
+                  <div className="p-2">Consensus Review</div>
+
+                  <div className="m-2 space-x-1">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-indigo-100 "
+                          >
+                            <FilePlusIcon className="text-indigo-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>New</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-purple-100"
+                          >
+                            <Pencil2Icon className="text-purple-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Edit</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-red-100"
+                          >
+                            <TrashIcon className="text-red-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Delete</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-yellow-100"
+                          >
+                            <PrinterIcon className="text-yellow-800 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Print</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-green-100"
+                          >
+                            <DownloadIcon className="text-green-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Download</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <ConsensusForecast data={generatedForecastData} />
+              </div>
+            </TabsContent>
+            <TabsContent value="DemandSupply">
+              <div className="flex items-center justify-center  rounded-t-lg bg-gradient-to-t from-indigo-400 via-cyan-400 to-sky-500 shadow-lg p-0.5">
+                <div className=" flex items-center w-full justify-between bg-sky-50  border rounded-t-lg text-2xl text-blue-900 font-bold">
+                  <div className="p-2">Demand Supply Balancing</div>
+
+                  <div className="m-2 space-x-1">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Timeline</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-28">
+                        <DropdownMenuLabel>View Type</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={setPosition}
+                        >
+                          <DropdownMenuRadioItem value="top">
+                            Weekly
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="bottom">
+                            Monthly
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="right">
+                            Quarterly
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">Plan</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-28">
+                        <DropdownMenuLabel>Plan Type</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuRadioGroup
+                          value={position}
+                          onValueChange={setPosition}
+                        >
+                          <DropdownMenuRadioItem value="top">
+                            Jan 2024
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="bottom">
+                            Feb 2024
+                          </DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value="right">
+                            Mar 2024
+                          </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <DemandPlanning data={demandPlanningData} />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="Financial">
+              <div className="flex items-center justify-center  rounded-t-lg bg-gradient-to-t from-indigo-400 via-cyan-400 to-sky-500 shadow-lg p-0.5">
+                <div className=" flex items-center w-full justify-between bg-sky-50  border rounded-t-lg text-2xl text-blue-900 font-bold">
+                  <div className="p-2">Financial Planning</div>
+
+                  <div className="m-2 space-x-1">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-indigo-100 "
+                          >
+                            <FilePlusIcon className="text-indigo-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>New</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-purple-100"
+                          >
+                            <Pencil2Icon className="text-purple-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Edit</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-red-100"
+                          >
+                            <TrashIcon className="text-red-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Delete</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-yellow-100"
+                          >
+                            <PrinterIcon className="text-yellow-800 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Print</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-green-100"
+                          >
+                            <DownloadIcon className="text-green-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Download</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
+              </div>
+              <div>Financial Planning</div>
+            </TabsContent>
+
+            <TabsContent value="Executive">
+              <div className="flex items-center justify-center  rounded-t-lg bg-gradient-to-t from-indigo-400 via-cyan-400 to-sky-500 shadow-lg p-0.5">
+                <div className=" flex items-center w-full justify-between bg-sky-50  border rounded-t-lg text-2xl text-blue-900 font-bold">
+                  <div className="p-2">Executive Meeting</div>
+
+                  <div className="m-2 space-x-1">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-indigo-100 "
+                          >
+                            <FilePlusIcon className="text-indigo-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>New</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-purple-100"
+                          >
+                            <Pencil2Icon className="text-purple-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Edit</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-red-100"
+                          >
+                            <TrashIcon className="text-red-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Delete</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-yellow-100"
+                          >
+                            <PrinterIcon className="text-yellow-800 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Print</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="bg-green-100"
+                          >
+                            <DownloadIcon className="text-green-700 w-6 h-6 " />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Download</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
+              </div>
+              <div>Executive Meeting</div>
+            </TabsContent>
+          </DemoContainer>
+        </Tabs>
       </div>
     </>
   );

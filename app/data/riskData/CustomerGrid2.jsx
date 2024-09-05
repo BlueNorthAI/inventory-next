@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { AgGridReact } from 'ag-grid-react'
+'use client';
+import React, { useState, useEffect } from 'react';
+import { AgGridReact } from 'ag-grid-react';
 
-import { Button} from '~/components/ui/button'
-import FormDialog from '~/components/dialog'
+import { Button } from '~/components/ui/button';
+import FormDialog from '~/components/dialog';
 
-const initialValue = { name: '', email: '', phone: '', dob: '' }
+const initialValue = { name: '', email: '', phone: '', dob: '' };
 
 export default function App() {
-  const [gridApi, setGridApi] = useState(null)
-  const [tableData, setTableData] = useState(null)
-  const [open, setOpen] = React.useState(false)
-  const [formData, setFormData] = useState(initialValue)
+  const [gridApi, setGridApi] = useState(null);
+  const [tableData, setTableData] = useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [formData, setFormData] = useState(initialValue);
   const handleClickOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleClose = () => {
-    setOpen(false)
-    setFormData(initialValue)
-  }
-  const url = `http://localhost:4000/users`
+    setOpen(false);
+    setFormData(initialValue);
+  };
+  const url = `http://localhost:4000/users`;
   const columnDefs = [
     { headerName: 'ID', field: 'id' },
     { headerName: 'Name', field: 'name' },
@@ -46,97 +47,97 @@ export default function App() {
             Delete
           </Button>
         </div>
-      ),
-    },
-  ]
+      )
+    }
+  ];
   // calling getUsers function for first time
   useEffect(() => {
-    getUsers()
-  }, [])
+    getUsers();
+  }, []);
 
   //fetching user data from server
   const getUsers = () => {
     fetch(url)
       .then((resp) => resp.json())
-      .then((resp) => setTableData(resp))
-  }
+      .then((resp) => setTableData(resp));
+  };
   const onChange = (e) => {
-    const { value, id } = e.target
+    const { value, id } = e.target;
     // console.log(value,id)
-    setFormData({ ...formData, [id]: value })
-  }
+    setFormData({ ...formData, [id]: value });
+  };
   const onGridReady = (params) => {
-    setGridApi(params)
-  }
+    setGridApi(params);
+  };
 
   // setting update row data to form data and opening pop up window
   const handleUpdate = (oldData) => {
-    setFormData(oldData)
-    handleClickOpen()
-  }
+    setFormData(oldData);
+    handleClickOpen();
+  };
   //deleting a user
   const handleDelete = (id) => {
     const confirm = window.confirm(
       'Are you sure, you want to delete this row',
       id
-    )
+    );
     if (confirm) {
       fetch(url + `/${id}`, { method: 'DELETE' })
         .then((resp) => resp.json())
-        .then((resp) => getUsers())
+        .then((resp) => getUsers());
     }
-  }
+  };
   const handleFormSubmit = () => {
     if (formData.id) {
       //updating a user
       const confirm = window.confirm(
         'Are you sure, you want to update this row ?'
-      )
+      );
       confirm &&
         fetch(url + `/${formData.id}`, {
           method: 'PUT',
           body: JSON.stringify(formData),
           headers: {
-            'content-type': 'application/json',
-          },
+            'content-type': 'application/json'
+          }
         })
           .then((resp) => resp.json())
           .then((resp) => {
-            handleClose()
-            getUsers()
-          })
+            handleClose();
+            getUsers();
+          });
     } else {
       // adding new user
       fetch(url, {
         method: 'POST',
         body: JSON.stringify(formData),
         headers: {
-          'content-type': 'application/json',
-        },
+          'content-type': 'application/json'
+        }
       })
         .then((resp) => resp.json())
         .then((resp) => {
-          handleClose()
-          getUsers()
-        })
+          handleClose();
+          getUsers();
+        });
     }
-  }
+  };
 
   const defaultColDef = {
     sortable: true,
     flex: 1,
     filter: true,
-    floatingFilter: true,
-  }
+    floatingFilter: true
+  };
   return (
     <div className="App">
-      <h1 className='text-center'>React-App</h1>
+      <h1 className="text-center">React-App</h1>
       <h3>CRUD Operation with Json-server in ag-Grid</h3>
-   
-        <Button color="primary" onClick={handleClickOpen}>
-          Add user
-        </Button>
-   
+
+      <Button color="primary" onClick={handleClickOpen}>
+        Add user
+      </Button>
+
       <div className="ag-theme-alpine" style={{ height: '400px' }}>
         <AgGridReact
           rowData={tableData}
@@ -153,7 +154,5 @@ export default function App() {
         handleFormSubmit={handleFormSubmit}
       />
     </div>
-  )
+  );
 }
-
-

@@ -1,12 +1,12 @@
-import { AgChartsReact } from 'ag-charts-react'
+import { AgCharts } from 'ag-charts-react'
 
 // import { topology } from './topology'
-import { topology, backgroundtopology, capitals } from '~/data/network/mapData/dcMap/topology'
-import CardLayout from '~/components/snop/CardLayout'
+import { topology, backgroundtopology, capitals } from '@/app/data/network/mapData/dcMap/topology'
+import CardLayout from '@/components/snop/CardLayout'
 import 'ag-charts-enterprise' // Import AgCharts Enterprise if needed
 
 import { ProgressBar } from '@progress/kendo-react-progressbars'
-import { Link } from '@remix-run/react'
+
 
 export const data = [
   { name: 'Alabama', code: 'AL', sales: 302289 },
@@ -303,7 +303,7 @@ export default function StoreMap() {
       </ul>
 
       <div className="w-full h-[900px] ">
-        <AgChartsReact options={options} />
+        <AgCharts options={options} />
       </div>
     </div>
   )

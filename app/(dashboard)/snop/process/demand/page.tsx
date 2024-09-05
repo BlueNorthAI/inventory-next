@@ -32,6 +32,9 @@ import taskData from '@/app/data/columndata/tasks.json';
 
 import DemandPlanning from '@/components/lowes/DemandPlanning';
 import ConsensusForecast from '@/components/lowes/ConsensusForecast';
+import { generatedAccuracyData } from '@/app/data/ag-table/forcastDemand';
+import { generatedForecastData } from '@/app/data/ag-table/consensusForecast';
+import { demandPlanningData} from '@/app/data/ag-table/demandPlanning';
 import ForecastDemand from '@/components/lowes/ForecastDemand';
 import { cn } from '@/lib/utils';
 
@@ -67,7 +70,10 @@ function DemoContainer({
 
 export default function ProcessIndex() {
   const [position, setPosition] = React.useState('bottom');
-//   const { tasks, demandData } = useLoaderData();
+
+
+   
+
   return (
     <>
       <div className="m-4">
@@ -105,7 +111,7 @@ export default function ProcessIndex() {
                       <DropdownMenuContent className="w-28">
                         <DropdownMenuLabel>View Type</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuRadioGroup
+                        {/* <DropdownMenuRadioGroup
                           value={position}
                           onValueChange={setPosition}
                         >
@@ -118,7 +124,7 @@ export default function ProcessIndex() {
                           <DropdownMenuRadioItem value="right">
                             Quarterly
                           </DropdownMenuRadioItem>
-                        </DropdownMenuRadioGroup>
+                        </DropdownMenuRadioGroup> */}
                       </DropdownMenuContent>
                     </DropdownMenu>
 
@@ -188,7 +194,7 @@ export default function ProcessIndex() {
                       <DropdownMenuContent className="w-28">
                         <DropdownMenuLabel>Plan Type</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuRadioGroup
+                        {/* <DropdownMenuRadioGroup
                           value={position}
                           onValueChange={setPosition}
                         >
@@ -201,7 +207,7 @@ export default function ProcessIndex() {
                           <DropdownMenuRadioItem value="right">
                             Mar 2024
                           </DropdownMenuRadioItem>
-                        </DropdownMenuRadioGroup>
+                        </DropdownMenuRadioGroup> */}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -209,7 +215,7 @@ export default function ProcessIndex() {
               </div>
 
               <div>
-                <ForecastDemand />
+                <ForecastDemand data={generatedAccuracyData} />
               </div>
             </TabsContent>
             {/* <TabsContent value="New">
@@ -396,7 +402,7 @@ export default function ProcessIndex() {
                 </div>
               </div>
               <div>
-                <ConsensusForecast />
+                <ConsensusForecast data={generatedForecastData} />
               </div>
             </TabsContent>
             <TabsContent value="DemandSupply">
@@ -456,7 +462,7 @@ export default function ProcessIndex() {
                 </div>
               </div>
               <div>
-                <DemandPlanning />
+                <DemandPlanning data={demandPlanningData} />
               </div>
             </TabsContent>
 

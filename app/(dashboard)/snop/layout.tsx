@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "@/components/header";
+import Header from "@/components/header";
 import {
   CubeIcon,
   GearIcon,
@@ -93,7 +93,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <Header title="Inventory Optimizer" />
+        <Header title="Inventory Optimizer" navigation={[]} />
         <div className="flex  bg-slate-50 shadow-lg">
           <Sidebar sidebarMenu={senariomenus} />
           <div className="w-full flex flex-col p-4 overflow-y-auto bg-slate-100">

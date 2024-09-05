@@ -3,7 +3,7 @@ import { Row } from "@tanstack/react-table";
 
 import { labels } from "../data/ui/data";
 import { taskSchema } from "@/app/data/ui/schema";
-import { Form, Link, useFetcher } from "@remix-run/react";
+// import { Form, Link, useFetcher } from "@remix-run/react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import Link from "next/link";
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
@@ -27,7 +27,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = taskSchema.parse(row.original);
-  const fetcher = useFetcher();
+  // const fetcher = useFetcher();
   // console.log(`inside row action`,row.original);
   return (
     <DropdownMenu>
@@ -70,13 +70,13 @@ export function DataTableRowActions<TData>({
             name="intent"
             value="archive"
             className="w-full"
-            hidden={row.original.Status === 'Open'}
-            onClick={() =>
-              fetcher.submit(
-                { scenario_id: row.original.scenario_id, intent: 'archive' },
-                { method: 'post' }
-              )
-            }
+            // hidden={row.original.Status === 'Open'}
+            // onClick={() =>
+            //   fetcher.submit(
+            //     { scenario_id: row.original.scenario_id, intent: 'archive' },
+            //     { method: 'post' }
+            //   )
+            // }
           >
             Archive
           </button>
@@ -87,13 +87,13 @@ export function DataTableRowActions<TData>({
             name="intent"
             value="delete"
             className="w-full"
-            hidden={row.original.Status !== 'Open'}
-            onClick={() =>
-              fetcher.submit(
-                { scenario_id: row.original.scenario_id, intent: 'delete' },
-                { method: 'post' }
-              )
-            }
+            // hidden={row.original.Status !== 'Open'}
+            // onClick={() =>
+            //   fetcher.submit(
+            //     { scenario_id: row.original.scenario_id, intent: 'delete' },
+            //     { method: 'post' }
+            //   )
+            // }
           >
             Delete
           </button>
@@ -101,9 +101,8 @@ export function DataTableRowActions<TData>({
 
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link
-            to={`/snop/scenario/${row.original.scenario_id}/analyze`}
-            hidden={row.original.Status !== 'Open'}
+          <Link href={""}            // herf={`/snop/scenario/${row.original.scenario_id}/analyze`}
+            // hidden={row.original.Status !== 'Open'}
           >
             <DropdownMenuItem>Analyze</DropdownMenuItem>
           </Link>
